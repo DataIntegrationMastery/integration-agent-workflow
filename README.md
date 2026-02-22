@@ -1,4 +1,5 @@
 # Integration Agent Workflow
+**Version 1.8** / *22th Feb 2026*
 
 A production-oriented agent workflow for integration development using **VS Code** and **GitHub Copilot Agents**.  
 
@@ -11,6 +12,8 @@ This repository implements a structured **PRD → PLAN → TASK** delivery model
 The model follows the principle:
 
 > **Human-as-Architect, AI-as-Builder**
+
+Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
 
 ---
 
