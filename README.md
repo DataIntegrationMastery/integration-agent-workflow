@@ -86,21 +86,16 @@ Your task is to update this repository so that it fully implements the agent env
 docs/developing-integrations-with-copilot.md
 
 Instructions:
-
 1. Read the entire file carefully before making changes.
 2. Identify all required.
 3. Create or update the repository so that it matches the specification.
 
 Specifically ensure:
-
 - `.github/agents/` exists
 - copilot-instructions.md exists in the repository root
-- `/docs/tasks/` structure exists
-- TASK-template.md exists
-- Controlled web usage policy is implemented (Designer only, verification-only use)
+- Required *template.md -files exists
 
 Rules:
-
 - Do NOT modify business source code.
 - Do NOT generate example PoC implementations.
 - Do NOT implement anything from instruction which is maked as 'OPTIONAL'
