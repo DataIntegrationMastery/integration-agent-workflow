@@ -62,7 +62,7 @@ Each TASK:
 
 # Getting Started
 
-The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in:
+The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction:
 
 `docs/developing-integrations-with-copilot.md`
 
@@ -77,8 +77,8 @@ Make sure:
 
 Copy and paste the following prompt into Copilot Chat:
 
----
 
+```
 You are an environment setup assistant.
 
 Your task is to update this repository so that it fully implements the agent environment described in:
@@ -88,35 +88,22 @@ docs/developing-integrations-with-copilot.md
 Instructions:
 
 1. Read the entire file carefully before making changes.
-2. Identify all required:
-   - Directory structures
-   - Agent definition files
-   - Workflow documentation
-   - TASK model definitions
-   - copilot-instructions rules
+2. Identify all required.
 3. Create or update the repository so that it matches the specification.
 
 Specifically ensure:
 
 - `.github/agents/` exists
-- Integration Designer.agent.md exists
-- Integration Planner.agent.md exists
-- Integration Builder.agent.md exists
 - copilot-instructions.md exists in the repository root
 - `/docs/tasks/` structure exists
 - TASK-template.md exists
-- Status model includes:
-  - TO-DO
-  - IN-PROGRESS
-  - IN-REVIEW
-  - DONE
-  - CANCELLED
 - Controlled web usage policy is implemented (Designer only, verification-only use)
 
 Rules:
 
 - Do NOT modify business source code.
 - Do NOT generate example PoC implementations.
+- Do NOT implement anything from instruction which is maked as 'OPTIONAL'
 - Only create or update configuration and documentation files required by the workflow.
 - If something already exists, update it to align with the specification rather than duplicating it.
 - Do not introduce new architectural concepts not defined in the specification document.
@@ -124,7 +111,7 @@ Rules:
 After completing changes:
 - List all created or modified files.
 - Briefly summarize what was aligned with the specification.
-
+```
 ---
 
 ## Step 2 — Review the Changes
