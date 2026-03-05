@@ -8,91 +8,67 @@ Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
 ## Table of Contents
 
 1. [Purpose](#purpose)
-   - [The Three-Agent Model for Integration Development](#the-three-agent-model-for-integration-development)
-   - [The PRD → PLAN → TASK Delivery Model](#the-prd--plan--task-delivery-model)
-   - [Why Not Use an Autonomous Coding Agent?](#why-not-use-an-autonomous-coding-agent)
 2. [Installing VS Code and GitHub Copilot](#installing-vs-code-and-github-copilot)
    - [Install Visual Studio Code](#install-visual-studio-code)
    - [Install GitHub Copilot Extension](#install-github-copilot-extension)
    - [Licensing and Pricing](#licensing-and-pricing)
-3. [Installing Integation Development Agents to Your Project](#installing-integation-development-agents-to-your-project)
+3. [Installing Integration Development Agents to Your Project](#installing-integration-development-agents-to-your-project)
    - [Step 1 — Getting this Repository as a Template to Your Project](#step-1--getting-this-repository-as-a-template-to-your-project)
    - [Step 2 — Bootstrap the Environment from the Design Document](#step-2--bootstrap-the-environment-from-the-design-document)
    - [Step 3 — Review the Changes](#step-3--review-the-changes)
 4. [Using the Agents](#using-the-agents)
    - [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
-   - [Handling the context](#handling-the-context)
+   - [Handling the Context](#handling-the-context)
    - [Workflow Phases](#workflow-phases)
-   - [When Controll files must be Changed](#when-controll-files-must-be-changed)
+     - [Phase 1 — Architecture & Requirements (PRD)](#phase-1--architecture--requirements-prd)
+     - [Phase 2 — Execution Planning (PLAN)](#phase-2--execution-planning-plan)
+     - [Phase 3 — TASK Implementation](#phase-3--task-implementation)
+     - [Phase 4 — Change Handling & Re-planning](#phase-4--change-handling--re-planning)
+   - [When Control Files Must Be Changed](#when-control-files-must-be-changed)
 5. [Demo Example](#demo-example)
+   - [Phase 1 — Architecture & Requirements (PRD)](#phase-1--architecture--requirements-prd-1)
+   - [Phase 2 — Execution Planning (PLAN)](#phase-2--execution-planning-plan-1)
+   - [Phase 3 — TASK Implementation](#phase-3--task-implementation-1)
+   - [Phase 4 — Change Handling & Re-planning](#phase-4--change-handling--re-planning-1)
 
 
 
 # Purpose
 
-This repository is a **template project** on GitHub. It contains the complete specification, agent definitions, templates, and rule system needed to bootstrap the Integration Agent Workflow in any integration project.
+GenAI has transformed how we write code. Autonomous agents can plan, break work into smaller pieces, decide sequentially when to fetch data, make calculations, or ask for help — and they adapt when new information arrives.
 
-## The Three-Agent Model for Integration Development
+But here's the problem: **Integration development cannot be fully delegated to an autonomous AI loop.**
 
-A production-oriented agent workflow for integration development using **VS Code** and **GitHub Copilot Agents**.  
+Integration work is a **contract between systems**. Every decision — retry policy, error handling, idempotency, observability, resilience — carries architectural consequences that you must understand, defend, and maintain. A single autonomous agent combining architecture, planning, and implementation in one loop gives you code. It does not give you solutions you can reason about.
 
-This repository implements a structured **PRD → PLAN → TASK** delivery model with strict role separation:
+## What This Template Offers
 
-- **Integration Designer** – Architecture & PRD
-- **Integration Planner** – TASK breakdown & execution planning
-- **Integration Builder** – Implementation & commit discipline
+This template repository gives you a **three-agent orchestration model** where:
 
-The model follows the principle:
+- **Architecture is a human responsibility.** AI accelerates, it does not decide.
+- **Each phase requires explicit approval** before the next begins.
+- **The audit trail is structural**, not accidental.
+- **Strict role separation** prevents drift and confusion.
 
-> **Human-as-Architect, AI-as-Builder**
+You get integration solutions you can **reason about, defend, and maintain**. Orchestrated AI. Bounded authority. Architectural discipline.
 
-## The PRD → PLAN → TASK Delivery Model
+## How It Works
 
-Before integrations are coded, they must be architected. This workflow enforces three distinct phases:
+**The workflow is PRD → PLAN → TASK:**
 
-*   **PRD (Product Requirements Document)** → create an explicit architectural definition
-*   **PLAN** → build a phased execution plan with vertical delivery slices
-*   **TASK** → deliver small end-to-end implementation units
+- **PRD (Product Requirements Document)** — Human + Designer Agent create explicit architectural definition
+- **PLAN** — Planner Agent breaks work into vertical delivery slices
+- **TASK** — Builder Agent implements each end-to-end unit
 
-In integration development this is essential, because integrations are not just endpoints. They are **contracts**, **flows**, **error handling**, **reliability**, and **observability** — architectural decisions that cannot be delegated to code generation alone.
+**Each agent has defined capabilities:**
+- **Designs and plans** — breaking complex work into manageable pieces
+- **Uses tools independently** — fetching data, writing code, seeking guidance when needed
+- **Adapts** — revising strategy when new information emerges
 
-It demonstrates how to:
+**But each agent is bounded.** No single agent makes architectural decisions. Authority is distributed. Humans approve before moving forward.
 
-- Structure integration development using Copilot Agents
-- Maintain architectural control while accelerating implementation
-- Enforce vertical delivery (TASK-based execution)
-- Keep repository documentation as the single source of truth
-- Prevent role drift between design, planning, and coding
+This is **systematic GenAI development**: structured orchestration, bounded authority, security discipline, and deep understanding of what models actually do.
 
-It is designed for real-world API and integration services (e.g., aggregation, enrichment, transformation).
-
-**NOTE:** This Agent flow methodology is based on GitHub Copilot with precisely defined different agents in the VS Code development environment (can also be applied to other IDEs). More detailed descriptions of these agents can be found in the instructions: **[docs/agent-workflow-setup-guide.md](docs/agent-workflow-setup-guide.md)**
-
-
-## Why Not Use an Autonomous Coding Agent?
-
-Tools like Claude Code are powerful — but they operate at a different level
-of abstraction. A single autonomous agent receives a high-level goal and
-executes independently, combining architecture, planning, and implementation
-in one loop.
-
-For integration development, this is a problem.
-
-Integration work is not a coding task. It is a contract between systems.
-Every decision — retry policy, error handling, idempotency, observability —
-has architectural consequences that cannot be delegated to an autonomous loop.
-
-The three-agent model here makes a deliberate choice:
-
-- The **human remains the architect** — not the AI
-- Each phase requires **explicit approval** before the next begins
-- The **audit trail is structural** — not accidental
-
-An autonomous agent can write code faster.
-This model produces integration solutions you can reason about, defend, and maintain.
-
-> Architecture is a human responsibility.
-> AI is the accelerator, not the decision-maker.
 
 ***
 
@@ -119,7 +95,7 @@ https://github.com/features/copilot/pricing
 
 ***
 
-# Installing Integation Development Agents to Your Project
+# Installing Integration Development Agents to Your Project
 
 The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[docs/agent-workflow-setup-guide.md](docs/agent-workflow-setup-guide.md)**
 
@@ -266,7 +242,7 @@ Alternatives:
 *   ***GPT‑5.3 Codex*** (complex Java/Camel)
 *   ***Claude Haiku / GPT‑5 mini*** (fast small tasks)
 
-## Handling the context
+## Handling the Context
 
 Agent memory comes from:
 
@@ -377,7 +353,7 @@ If new requirements or information appears:
 
 ***
 
-## **When Controll files must be Changed**
+## **When Control Files Must Be Changed**
 
 If you update `.github/copilot-instructions.md` during development, make sure the agents actually use the new rules.
 
