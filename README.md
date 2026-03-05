@@ -18,32 +18,26 @@ The model follows the principle:
 
 ## Table of Contents
 
-1. [Documentation](#documentation)
-2. [Purpose](#purpose)
-3. [Workflow Model](#workflow-model)
-4. [Installing Agents to Your Project](#installing-agents-to-your-project)
-5. [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
-6. [Using the Agents](#using-the-agents)
-7. [Artifact-First Principle](#artifact-first-principle)
-8. [When Instructions Have Changed](#when-instructions-have-changed)
-9. [Working Method](#working-method)
-10. [Workflow Phases](#workflow-phases)
-11. [Demo Example](#demo-example)
-
----
-
-# Documentation
-
-| Document | Description |
-|----------|-------------|
-| [Developing Integrations with Copilot](docs/developing-integrations-with-copilot.md) | Main workflow specification – agent roles, folder structure, status model |
-| [Integration Architecture Rule System](docs/rules/integration-architecture-rule-system/README.md) | Architecture rules, design principles, pattern selection, and validation checklists |
+1. [Purpose](#purpose)
+2. [Workflow Model](#workflow-model)
+3. [Installing Agents to Your Project](#installing-agents-to-your-project)
+   - [Step 1 — Getting this Repository as a Template to Your Project](#step-1--getting-this-repository-as-a-template-to-your-project)
+   - [Step 2 — Bootstrap the Environment from the Design Document](#step-2--bootstrap-the-environment-from-the-design-document)
+   - [Step 3 — Review the Changes](#step-3--review-the-changes)
+4. [Using the Agents](#using-the-agents)
+   - [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
+   - [Handling the context](#handling-the-context)
+5. [Workflow Phases](#workflow-phases)
+6. [When Instructions Have Changed](#when-instructions-have-changed)
+7. [Demo Example](#demo-example)
 
 ---
 
 # Purpose
 
-This repository demonstrates how to:
+This repository is a **template project** on GitHub. It contains the complete specification, agent definitions, templates, and rule system needed to bootstrap the Integration Agent Workflow in any integration project.
+
+It demonstrates how to:
 
 - Structure integration development using Copilot Agents
 - Maintain architectural control while accelerating implementation
@@ -71,7 +65,7 @@ PRD is the architectural source of truth.
 
 ---
 
-## 2. PLAN → TASK Structure (v2.1 Model)
+## 2. PLAN → TASK Structure 
 
 The Integration Planner translates PRD into vertical delivery units.
 
@@ -84,22 +78,34 @@ Each TASK:
 
 ---
 
+***
+
 # Installing Agents to Your Project
 
-The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction:
+The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: `docs/developing-integrations-with-copilot.md`
 
-`docs/developing-integrations-with-copilot.md`
+## Step 1 — Getting this Repository as a Template to Your Project
 
-Make sure:
+To use this template as a starting point for your own project, add it as a temporary Git remote and copy the files:
+
+```bash
+git remote add template https://github.com/DataIntegrationMastery/integration-agent-workflow.git
+git fetch template
+git checkout template/main -- .    # copies all template files into your working directory
+git remote remove template
+```
+
+After this, make sure:
 - You are in the root of your repository in VS Code
-- The file `docs/developing-integrations-with-copilot.md` already exists -
+- The file `docs/developing-integrations-with-copilot.md` exists 
+- The directory `docs/rules` exists 
 - Copilot Chat is open
 
 ---
 
-## Step 1 — Bootstrap the Environment from the Design Document
+## Step 2 — Bootstrap the Environment from the Design Document
 
-Copy and paste the following prompt into Copilot Chat:
+Choose the latest Claude Opus model and copy and paste the following prompt into Copilot Chat:
 
 
 ```
@@ -111,7 +117,7 @@ docs/developing-integrations-with-copilot.md
 
 Instructions:
 1. Read the entire file carefully before making changes.
-2. Identify all required.
+2. Identify all required files, folders, and configuration structures.
 3. Create or update the repository so that it matches the specification.
 
 Specifically ensure:
@@ -122,18 +128,24 @@ Specifically ensure:
 Rules:
 - Do NOT modify business source code.
 - Do NOT generate example PoC implementations.
-- Do NOT implement anything from instruction which is maked as 'OPTIONAL'
+- Do NOT implement anything from instruction which is marked as 'OPTIONAL'
 - Only create or update configuration and documentation files required by the workflow.
 - If something already exists, update it to align with the specification rather than duplicating it.
 - Do not introduce new architectural concepts not defined in the specification document.
 
-After completing changes:
+After completing the base setup, check if the specification includes optional features (OPTIONs).
+For each OPTION found in docs/developing-integrations-with-copilot.md:
+- Ask the user if they want to enable it
+- If yes: follow the detailed instructions provided in that OPTION section
+
+After completing all changes:
 - List all created or modified files.
 - Briefly summarize what was aligned with the specification.
+- Report which OPTIONs were enabled.
 ```
 ---
 
-## Step 2 — Review the Changes
+## Step 3 — Review the Changes
 
 After Copilot completes:
 
@@ -146,13 +158,37 @@ After Copilot completes:
 4. Verify status model consistency
 5. Confirm that PRD is defined as architectural source of truth
 
+### **Critical: Review Project Context and Technology Stack**
+
+The setup assistant generates two files that **require your input before agents can work correctly**:
+
+| File | Purpose |
+|------|---------|
+| `docs/rules/project-context.md` | Defines project name, runtime, framework, API spec locations, deployment model |
+| `docs/rules/technology-stack.md` | Defines mandatory technology constraints, allowed/forbidden libraries, conventions |
+
+**These files contain placeholder values.** You must:
+
+1. Open `docs/rules/project-context.md` and replace all `[...]` placeholders with your actual project details
+2. Open `docs/rules/technology-stack.md` and define your actual technology rules and constraints
+3. Verify that the agent `.agent.md` files reference these files correctly
+
+> **Without accurate project context and technology stack rules, agents will produce generic or incorrect outputs.** This is the single most important manual step in the setup.
+
 ---
 
-# **Choosing the Language Models for the Agents**
 
-## **Best models as of Feb 2026**
 
-### **Designer → *Claude Opus 4.6***
+***
+
+
+# **Using the Agents**
+
+## **Choosing the Language Models for the Agents**
+
+***Best models as of Feb 2026***
+
+**Designer → *Claude Opus 4.6***
 
 Reasons:
 
@@ -163,7 +199,7 @@ Reasons:
 
 Alternative: ***GPT‑5.2***
 
-### **Planner → *Claude Opus 4.6***
+**Planner → *Claude Opus 4.6***
 
 Reasons:
 
@@ -173,7 +209,7 @@ Reasons:
 
 Alternative: ***GPT‑5.2***
 
-### **Builder → *Claude Sonnet 4.6***
+**Builder → *Claude Sonnet 4.6***
 
 Reasons:
 
@@ -186,25 +222,27 @@ Alternatives:
 *   ***GPT‑5.3 Codex*** (complex Java/Camel)
 *   ***Claude Haiku / GPT‑5 mini*** (fast small tasks)
 
-***
-
-
-# **Using the Agents**
+## Handling the context
 
 Agent memory comes from:
 
 1.  System prompt
 2.  `copilot-instructions.md`
 3.  Current conversation
-4.  Workspace files
+4.  Workspace files:
+   *   RULEs
+   *   PRDs
+   *   PLANs
+   *   TASKs 
+   *   Other documents
 
-## **Do not mix roles**
+### **Do not mix roles**
 
 *   Use a separate chat for Designer
 *   Use a separate chat for Planner
 *   Use a separate chat for Builder
 
-To reset context:
+**To reset context**
 
 Designer:
 
@@ -221,45 +259,6 @@ Builder:
 ***
 
 
-# **Artifact‑First Principle**
-
-Agent memory **must be in files**, not in chat.
-
-*   PRDs
-*   PLANs
-*   TASK documents
-
-Avoid relying on past conversation.
-
-***
-
-
-# **When Instructions Have Changed**
-
-If you update `.github/copilot-instructions.md` during development, make sure the agents actually use the new rules.
-
-## Recommended (most reliable)
-1.	Save and commit the updated copilot-instructions.md.
-2.	Close the current chat.
-3.	Start a new chat and select the correct agent.
-4.	Begin with: 
-```Act according to the updated .github/copilot-instructions.md. Confirm you are using the latest version.```
-
-This ensures the agent reloads repository context and applies the new rules cleanly.
-
-## Alternative (within the same chat)
-
-If you do not want to restart the conversation, explicitly instruct the agent: 
-``` Re-read .github/copilot-instructions.md and apply the updated rules before continuing.```
-
-This often works, but for significant rule changes, starting a new chat is safer and more deterministic.
-
-***
-
-
-# **Working Method**
-
-## **Purpose of the PRD → PLAN → TASK model**
 
 Integration development needs structure because it involves:
 
@@ -302,9 +301,9 @@ AI accelerates implementation.
 ***
 
 
-# **Workflow Phases**
+## **Workflow Phases**
 
-## **Phase 1 — Architecture & Requirements (PRD)**
+### **Phase 1 — Architecture & Requirements (PRD)**
 
 Designer + Human:
 
@@ -313,25 +312,23 @@ Designer + Human:
 *   Define flows
 *   Define NFRs
 
-Designer:
+*In a chat with Integration Designer:*
 
     Create PRD for feature X in /docs/prd.
 
 Human approves.
 
-## **Phase 2 — Execution Planning (PLAN)**
+### **Phase 2 — Execution Planning (PLAN)**
 
-Planner:
+*Open a new chat and use Integration Planner:*
 
     Create plan from approved PRD. Include 3–6 TASKs.
 
 Human approves.
 
-Planner can generate tasks for each TASK.
+### **Phase 3 — TASK Implementation**
 
-## **Phase 3 — TASK Implementation**
-
-Builder:
+*Open a new chat and use Integration Builder:*
 
     Implement TASK-01 exactly as defined.
 
@@ -342,21 +339,43 @@ Builder:
 *   Fixes issues
 *   Reports
 
-## **Phase 4 — Change Handling & Re‑planning**
+### **Phase 4 — Change Handling & Re‑planning**
 
 If new requirements or information appears:
 
-1.  Human → Designer (evaluate architectural impact, update PRD)
-2.  Designer → Planner (update plan based on PRD changes)
-3.  Planner → Builder (implement updated TASKs)
+1.  Human → Designer **(new chat)** — evaluate architectural impact, update PRD
+2.  Designer → Planner **(new chat)** — update plan based on PRD changes
+3.  Planner → Builder **(new chat)** — implement updated TASKs
 
-Planner:
+*In a chat with Integration Planner:*
 
     Update plan based on updated PRD and test findings.
 
 ***
 
-# Demo Example
+## **When Instructions Have Changed**
+
+If you update `.github/copilot-instructions.md` during development, make sure the agents actually use the new rules.
+
+### Recommended (most reliable)
+1.	Save and commit the updated copilot-instructions.md.
+2.	Close the current chat.
+3.	Start a new chat and select the correct agent.
+4.	Begin with: 
+```Act according to the updated .github/copilot-instructions.md. Confirm you are using the latest version.```
+
+This ensures the agent reloads repository context and applies the new rules cleanly.
+
+### Alternative (within the same chat)
+
+If you do not want to restart the conversation, explicitly instruct the agent: 
+``` Re-read .github/copilot-instructions.md and apply the updated rules before continuing.```
+
+This often works, but for significant rule changes, starting a new chat is safer and more deterministic.
+
+***
+
+# **Demo Example**
 
 Once the agents are installed in your project, you can walk through the full workflow using the **Star Wars Character Search** example below.
 
@@ -364,10 +383,10 @@ Once the agents are installed in your project, you can walk through the full wor
 
 ## **Phase 1 — Architecture & Requirements (PRD)**
 
-Send the following prompt to **Integration Designer Agent**:
+**Open a new chat** with **Integration Designer Agent**. Choose the latest **Claude Opus** model and send the following prompt:
 
 ```
-You are Integration Designer.
+You are Integration Designer. Ignore previous planning and builder discussions.
 
 Create a complete PRD for a new integration service.
 
@@ -390,10 +409,10 @@ This will generate a PRD under `/docs/prd/`. **Review and approve** the PRD befo
 
 ## **Phase 2 — Execution Planning (PLAN)**
 
-Open a **new chat** and send the following prompt to **Integration Planner Agent**:
+**Open a new chat** with **Integration Planner Agent** (do not continue in the Designer chat). Choose the latest **Claude Opus** model and send the following prompt:
 
 ```
-You are Integration Planner.
+You are Integration Planner. Ignore previous designer discussions.
 
 Read the approved PRD under /docs/prd/ for the Star Wars Character Search service.
 
@@ -409,10 +428,10 @@ Generate TASK documents under /docs/tasks/.
 
 ## **Phase 3 — TASK Implementation**
 
-Open a **new chat** and send the following prompt to **Integration Builder Agent** for the first TASK:
+**Open a new chat** with **Integration Builder Agent** (do not continue in the Planner chat). Choose the latest **Claude Sonnet** model and send the following prompt for the first TASK:
 
 ```
-You are Integration Builder.
+You are Integration Builder. Ignore previous designer and planner discussions.
 
 Implement TASK-01 exactly as defined in /docs/tasks/TASK-01/.
 
@@ -420,10 +439,12 @@ Follow all rules from copilot-instructions.md.
 Run tests after implementation and report results.
 ```
 
+> **Note:** If no SUBTASK files exist yet for the TASK, the Builder will first generate 5–12 SUBTASK definitions and **stop for your approval** before implementing. Review the SUBTASKs, then instruct the Builder to proceed.
+
 After TASK-01 is complete and verified, continue with the next TASK:
 
 ```
-You are Integration Builder.
+You are Integration Builder. Ignore previous planning discussions.
 
 Implement TASK-02 exactly as defined in /docs/tasks/TASK-02/.
 
@@ -437,10 +458,10 @@ Repeat for each remaining TASK until the service is fully implemented.
 
 ## **Phase 4 — Change Handling & Re-planning**
 
-If during implementation new requirements or issues arise, open a **new chat** with the **Integration Designer Agent**:
+If during implementation new requirements or issues arise, **open a new chat** with **Integration Designer Agent** (do not continue in the Builder chat). Choose the latest **Claude Opus** model and send the following prompt:
 
 ```
-You are Integration Designer.
+You are Integration Designer. Ignore previous planner and builder discussions.
 
 Read the current PRD under /docs/prd/ for the Star Wars Character Search service.
 
@@ -451,7 +472,7 @@ Evaluate the following change request and update the PRD if needed:
 After the PRD is updated, switch to **Integration Planner Agent** in a **new chat**:
 
 ```
-You are Integration Planner.
+You are Integration Planner. Ignore previous designer discussions.
 
 The PRD under /docs/prd/ has been updated.
 

@@ -1,6 +1,43 @@
 # **Developing Integrations with Copilot**
 **Version 1.12** / *5th Mar 2026 – Ari*
 
+---
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+   - [Why Not Use an Autonomous Coding Agent?](#why-not-use-an-autonomous-coding-agent)
+2. [Installing VS Code and GitHub Copilot](#installing-vs-code-and-github-copilot)
+   - [Install Visual Studio Code](#install-visual-studio-code)
+   - [Install GitHub Copilot Extension](#install-github-copilot-extension)
+   - [Licensing and Pricing](#licensing-and-pricing)
+   - [Additional Environment Requirements for Agent-Based Development](#additional-environment-requirements-for-agent-based-development)
+3. [Environment Setup](#environment-setup)
+   - [Minimum Folder Structure](#minimum-folder-structure)
+   - [Purpose of the Folders](#purpose-of-the-folders)
+4. [Control Files](#control-files)
+   - [INSTRUCTIONS for Copilot](#instructions-for-copilot)
+   - [Project Context](#project-context)
+   - [Technology Stack Rules](#technology-stack-rules)
+   - [PRD template](#prd-template)
+   - [PLAN template](#plan-template)
+   - [TASK template](#task-template)
+   - [SUBTASK template](#subtask-template)
+   - [TASK Folder Structure](#task-folder-structure)
+   - [Status Model](#status-model)
+   - [PR Template (OPTIONAL)](#pr-template-optional)
+5. [Creating the Agents in VS Code](#creating-the-agents-in-vs-code)
+   - [Integration Designer Agent](#integration-designer-agent)
+   - [Integration Planner Agent](#integration-planner-agent)
+   - [Integration Builder Agent](#integration-builder-agent)
+   - [If you are creating agents in the existing integration project](#if-you-are-creating-agents-in-the-existing-integration-project)
+6. [OPTION 1: Enable Integration Architecture Rule System for Agents](#option-1-enable-integration-architecture-rule-system-for-agents)
+   - [How to Enable](#how-to-enable)
+7. [OPTION 2: Agent Delegation: Orchestrating Planner and Builder](#option-2-agent-delegation-orchestrating-planner-and-builder-for-end-to-end-implementation)
+   - [How to Enable](#how-to-enable-1)
+
+---
+
 ## **Introduction**
 
 This document describes a practical and controlled method for using GitHub Copilot in integration development so that **the human acts as the architect and the AI as the implementer**.
@@ -209,6 +246,9 @@ This is critical.
         /architecture
         /plans
         /prd
+        /rules
+            project-context.md
+            technology-stack.md
         /tasks
             TASK-template.md
             SUBTASK-template.md
@@ -228,6 +268,10 @@ Templates: `TASK-template.md` and `SUBTASK-template.md` at root level.
 
 **/docs/architecture**  
 Architectural Decision Records.
+
+**/docs/rules**  
+Project-level control files: `project-context.md` and `technology-stack.md`.  
+If OPTION 1 is enabled, also contains `integration-architecture-rule-system/`.
 
 ***
 
@@ -371,6 +415,49 @@ Example content:
     - Do not merge designer, planner, and builder roles.
     - Use artifacts (/docs) as primary memory source.
 ```
+
+## **Project Context**
+
+Defines the project identity, runtime, framework, repository structure, deployment model, and naming conventions.
+All three agents reference this file for project-level context.
+
+Create:
+
+    /docs/rules/project-context.md
+
+Content should include:
+- Project name
+- Language & version (e.g., Java 17+)
+- Framework (e.g., Spring Boot, Quarkus)
+- Integration framework (e.g., Apache Camel)
+- API specs location (e.g., `/openapi`)
+- Deployment artifacts and target (e.g., Helm, Kubernetes)
+- Package structure and naming conventions
+
+> **This file does not exist by default. You must create it and fill in your actual project details before activating agents.**
+
+---
+
+## **Technology Stack Rules**
+
+Defines mandatory technology constraints, allowed and forbidden libraries, framework conventions, testing patterns, and terminology.
+Referenced by Planner (for TASK specifications) and Builder (for implementation).
+
+Create:
+
+    /docs/rules/technology-stack.md
+
+Content should include:
+- Mandatory integration framework and usage rules
+- Forbidden libraries and patterns (explicit list)
+- Required base classes, annotations, and component patterns
+- Test framework and test pattern requirements
+- Code style rules (injection, data format)
+- Terminology for TASK/SUBTASK documents
+
+> **This file does not exist by default. You must create it and define your actual technology stack rules before activating agents.**
+
+---
 
 ## **PRD template**
 
@@ -885,10 +972,11 @@ You have access to the `fetch` tool for web searches. Use it **only** under thes
 
 ## Project Context
 
-- This is a Quarkus-based microservice (`ext-membership-core-service`).
-- Java 17+, Jakarta EE, Apache Camel.
-- OpenAPI specs are maintained under `/openapi`.
-- Helm charts under `/chart`.
+Read and apply the project context defined in:
+- `/docs/rules/project-context.md` — project name, runtime, framework, deployment model
+
+These definitions are the source of truth for all architecture decisions.
+Do NOT override them with assumptions or web-sourced information.
 ```
 
 ## **Integration Planner Agent**
@@ -1020,19 +1108,14 @@ Ensure TASK definitions cover:
 
 ---
 
-## Project Context
+## Project Context & Technology Stack
 
-- This is a Quarkus-based microservice (`ext-membership-core-service`).
-- Java 17+, Jakarta EE, Apache Camel.
-- OpenAPI specs are maintained under `/openapi`.
-- Helm charts under `/chart`.
+Read and apply the following project-level definitions:
+- `/docs/rules/project-context.md` — project name, runtime, framework, deployment model
+- `/docs/rules/technology-stack.md` — integration framework conventions and terminology
 
-### Technology Stack Awareness
-
-- All integration flows in this project are implemented using **Apache Camel routes** (Java DSL).
-- When defining TASK specifications, use Camel terminology: **route**, **processor**, **endpoint**, **component**, **EIP pattern**, **direct/seda**, **Dead Letter Channel**.
-- TASK "End-to-End Flow" descriptions should map to Camel route concepts (e.g., `from("direct:...").process(...).to("http://...")`).
-- Do NOT plan integration flows as plain Java code or JAX-RS client calls.
+These definitions are the source of truth for planning.
+Do NOT override them with assumptions.
 ```
 
 ## **Integration Builder Agent**
@@ -1176,31 +1259,18 @@ After completing a TASK, provide:
 
 ---
 
-## Project Context
+## Project Context & Technology Stack Rules
 
-- This is a Quarkus-based microservice (`ext-membership-core-service`).
-- Java 17+, Jakarta EE, Apache Camel.
-- OpenAPI specs are maintained under `/openapi`.
-- Helm charts under `/chart`.
+Read and apply the following project-level definitions:
+- `/docs/rules/project-context.md` — project name, runtime, framework, deployment model
+- `/docs/rules/technology-stack.md` — mandatory technology stack rules and constraints
 
-### Technology Stack Rules (MANDATORY)
-
-- **All integration routes MUST be implemented as Apache Camel routes** using the Camel Java DSL.
-- **Do NOT use** plain Java HTTP clients (`HttpClient`, `HttpURLConnection`), JAX-RS Client API, `RestTemplate`, or `WebClient` for integration flows.
-- Use `RouteBuilder` or `EndpointRouteBuilder` classes annotated with `@ApplicationScoped`.
-- Implement route logic in the `configure()` method.
-- Use Camel components for external communication: `camel-http`, `camel-rest`, `camel-jackson`, `camel-direct`, `camel-seda`, etc.
-- Use Camel EIP patterns where applicable: Content-Based Router, Splitter, Aggregator, Wire Tap, Dead Letter Channel.
-- Use `Processor` or bean references for transformation logic.
-- For REST endpoints exposed by this service, use Camel REST DSL or Quarkus JAX-RS as specified in the TASK.
-- Use `@QuarkusTest` and RestAssured or `ProducerTemplate` for testing.
-- Use `@ApplicationScoped` for CDI beans.
-- Prefer constructor injection over field injection.
-- Use JSON as default request/response format.
+These definitions are the source of truth for implementation.
+Do NOT use libraries, patterns, or frameworks that are not defined in these files.
 ```
 
 ***
-## **If you are creating agents in the existing integration project**
+## **NOTE: If you are creating agents in the existing integration project**
 
 When adding the three-agent model to a project that already has an existing
 codebase, the setup differs from a greenfield project. The agents need to
@@ -1284,8 +1354,48 @@ Key things to verify and update:
 
 ***
 
+# **OPTION 1:** Enable Integration Architecture Rule System for Agents
 
-# Agent Delegation: Orchestrating Planner and Builder for End-to-End Implementation (OPTIONAL)
+The **Integration Architecture Rule System** provides a deterministic, rule-based framework that guides the **Designer** and **Planner** agents to make structured, traceable architecture decisions instead of relying on general AI knowledge.
+
+When enabled, these agents will:
+
+- Apply explicit design principles, decision rules, and pattern selection rules
+- Cite rule identifiers (e.g., `P01`, `D01`, `NFR02`) in every architecture decision
+- Run validation checklists before finalizing PRD documents
+- Trigger human review when rule conflicts cannot be resolved
+
+## How to Enable
+
+Follow the installation guide in:
+
+**[Integration Architecture Rule System — Installation Guide](rules/integration-architecture-rule-system/README.md#7-installation-guide--github-copilot-agent-instruction-file)**
+
+The guide describes:
+
+1. **Prerequisites** — required file structure under `/docs/rules/`
+2. **Target agent** — which agent to configure (Designer, and optionally Planner)
+3. **Section to add** — the exact Markdown block to insert into the agent's `.agent.md` file
+4. **Loading strategy** — how the agent should load rule files on demand
+5. **Verification** — how to confirm the agent is using the rule system correctly
+
+## Affected Agents
+
+| Agent | Impact |
+|-------|--------|
+| **Integration Designer** | Primary target. Applies rules when creating and validating PRDs. |
+| **Integration Planner** | Optional. Can reference rules when evaluating TASK feasibility and NFR compliance. |
+| **Integration Builder** | Not affected. Builder focuses on implementation, not architecture decisions. |
+
+## Important
+
+- The rule system files must exist under `/docs/rules/integration-architecture-rule-system/` in your repository
+- Do NOT copy the rule content into the agent file — the agent loads rule files on demand from the repository
+- After modifying agent `.agent.md` files, start a **new chat** to ensure the agent picks up the changes
+
+***
+
+# **OPTION 2:** Agent Delegation: Orchestrating Planner and Builder for End-to-End Implementation
 
 It is technically possible to let the **Planner orchestrate full implementation together with the Builder** by using **agent delegation**. In this model, once the PRD is finalized, the Planner converts it into structured TASKs and delegates each TASK to the Builder for implementation, testing, and committing.
 
@@ -1305,6 +1415,65 @@ It is technically possible to let the **Planner orchestrate full implementation 
 - Reduced transparency if TASKs are not clearly defined
 
 Delegation works best when implementation is performed TASK-by-TASK rather than in one large task.
+
+---
+
+## How to Enable
+
+### Step 1 — Update Integration Planner frontmatter
+
+In `.github/agents/Integration Planner.agent.md`, update the `tools:` line in the frontmatter.
+
+Change:
+```
+tools: ['read', 'edit', 'search']
+```
+To:
+```
+tools: ['read', 'edit', 'search', 'agent']
+```
+
+### Step 2 — Add delegation instructions to Integration Planner
+
+Add the following section to `.github/agents/Integration Planner.agent.md`, before `## Project Context & Technology Stack`:
+
+```markdown
+## TASK Delegation to Integration Builder
+
+When delegation is enabled:
+
+1. Create and document all TASKs under `/docs/tasks/` as normal.
+2. Present the full TASK list to the human for approval before delegating.
+3. After approval, delegate each TASK to **Integration Builder** one at a time:
+   - Reference the TASK file: `/docs/tasks/TASK-XX/TASK-XX.md`
+   - Instruct Builder to implement exactly one TASK
+   - Wait for Builder to complete and report before delegating the next TASK
+4. After each TASK, verify:
+   - TASK status is set to `IN-REVIEW`
+   - Builder reported test results and changed files
+   - No unresolved architectural issues
+5. Report overall progress to the human after each TASK cycle.
+
+**CRITICAL:**
+- Do NOT delegate multiple TASKs simultaneously.
+- Do NOT implement code yourself — delegation only.
+- If Builder detects an architectural issue, stop and escalate to the human before continuing.
+```
+
+### Step 3 — Verify Builder capability
+
+No changes are required to the **Integration Builder** agent. It already implements TASKs correctly via its `edit` and `execute` capabilities.
+
+Confirm that the Builder frontmatter includes:
+```
+tools: ['read', 'edit', 'search', 'execute']
+```
+
+### Important
+
+- After modifying agent `.agent.md` files, start a **new chat** to ensure the agents pick up the changes
+- Delegation works best for well-defined, isolated TASKs — avoid delegating TASKs with unclear acceptance criteria
+- The human must still review each completed TASK and set TASK status to `DONE`
 
 ---
 
@@ -1334,4 +1503,9 @@ To enable safe delegation, the three agents must be configured as follows:
   - Running tests
   - Fixing failures
   - Committing changes
+
+
+---
+
+
 
