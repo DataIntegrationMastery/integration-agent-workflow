@@ -2,6 +2,38 @@
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
 **Version 1.9** / *5th Mar 2026*
 
+
+
+
+## Table of Contents
+
+1. [Purpose](#purpose)
+   - [The Three-Agent Model for Integration Development](#the-three-agent-model-for-integration-development)
+   - [The PRD → PLAN → TASK Delivery Model](#the-prd--plan--task-delivery-model)
+   - [Why Not Use an Autonomous Coding Agent?](#why-not-use-an-autonomous-coding-agent)
+2. [Installing VS Code and GitHub Copilot](#installing-vs-code-and-github-copilot)
+   - [Install Visual Studio Code](#install-visual-studio-code)
+   - [Install GitHub Copilot Extension](#install-github-copilot-extension)
+   - [Licensing and Pricing](#licensing-and-pricing)
+3. [Installing Integation Development Agents to Your Project](#installing-integation-development-agents-to-your-project)
+   - [Step 1 — Getting this Repository as a Template to Your Project](#step-1--getting-this-repository-as-a-template-to-your-project)
+   - [Step 2 — Bootstrap the Environment from the Design Document](#step-2--bootstrap-the-environment-from-the-design-document)
+   - [Step 3 — Review the Changes](#step-3--review-the-changes)
+4. [Using the Agents](#using-the-agents)
+   - [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
+   - [Handling the context](#handling-the-context)
+   - [Workflow Phases](#workflow-phases)
+   - [When Controll files must be Changed](#when-controll-files-must-be-changed)
+5. [Demo Example](#demo-example)
+
+
+
+# Purpose
+
+This repository is a **template project** on GitHub. It contains the complete specification, agent definitions, templates, and rule system needed to bootstrap the Integration Agent Workflow in any integration project.
+
+## The Three-Agent Model for Integration Development
+
 A production-oriented agent workflow for integration development using **VS Code** and **GitHub Copilot Agents**.  
 
 This repository implements a structured **PRD → PLAN → TASK** delivery model with strict role separation:
@@ -14,33 +46,15 @@ The model follows the principle:
 
 > **Human-as-Architect, AI-as-Builder**
 
----
+## The PRD → PLAN → TASK Delivery Model
 
-## Table of Contents
+Before integrations are coded, they must be architected. This workflow enforces three distinct phases:
 
-1. [Purpose](#purpose)
-   - [Why Not Use an Autonomous Coding Agent?](#why-not-use-an-autonomous-coding-agent)
-2. [Installing VS Code and GitHub Copilot](#installing-vs-code-and-github-copilot)
-   - [Install Visual Studio Code](#install-visual-studio-code)
-   - [Install GitHub Copilot Extension](#install-github-copilot-extension)
-   - [Licensing and Pricing](#licensing-and-pricing)
-   - [Additional Environment Requirements for Agent-Based Development](#additional-environment-requirements-for-agent-based-development)
-3. [Installing Integation Development Agents to Your Project](#installing-integation-development-agents-to-your-project)
-   - [Step 1 — Getting this Repository as a Template to Your Project](#step-1--getting-this-repository-as-a-template-to-your-project)
-   - [Step 2 — Bootstrap the Environment from the Design Document](#step-2--bootstrap-the-environment-from-the-design-document)
-   - [Step 3 — Review the Changes](#step-3--review-the-changes)
-4. [Using the Agents](#using-the-agents)
-   - [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
-   - [Handling the context](#handling-the-context)
-   - [Workflow Phases](#workflow-phases)
-   - [When Controll files must be Changed](#when-controll-files-must-be-changed)
-5. [Demo Example](#demo-example)
+*   **PRD (Product Requirements Document)** → create an explicit architectural definition
+*   **PLAN** → build a phased execution plan with vertical delivery slices
+*   **TASK** → deliver small end-to-end implementation units
 
----
-
-# Purpose
-
-This repository is a **template project** on GitHub. It contains the complete specification, agent definitions, templates, and rule system needed to bootstrap the Integration Agent Workflow in any integration project.
+In integration development this is essential, because integrations are not just endpoints. They are **contracts**, **flows**, **error handling**, **reliability**, and **observability** — architectural decisions that cannot be delegated to code generation alone.
 
 It demonstrates how to:
 
@@ -52,7 +66,7 @@ It demonstrates how to:
 
 It is designed for real-world API and integration services (e.g., aggregation, enrichment, transformation).
 
-**NOTE:** This Agent flow methodology is based on GitHub Copilot with precisely defined different agents in the VS Code development environment (can also be applied to other IDEs). More detailed descriptions of these agents can be found in the instructions: **[docs/developing-integrations-with-copilot.md](docs/developing-integrations-with-copilot.md)**
+**NOTE:** This Agent flow methodology is based on GitHub Copilot with precisely defined different agents in the VS Code development environment (can also be applied to other IDEs). More detailed descriptions of these agents can be found in the instructions: **[docs/agent-workflow-setup-guide.md](docs/agent-workflow-setup-guide.md)**
 
 
 ## Why Not Use an Autonomous Coding Agent?
@@ -96,9 +110,6 @@ https://code.visualstudio.com/
 After installing VS Code, open the Extensions marketplace and install GitHub Copilot, or follow the official setup guide here:
 https://docs.github.com/en/copilot/getting-started-with-github-copilot
 
-The official documentation includes the most up-to-date steps for Windows and Mac, account authentication, subscription requirements, and enabling Copilot Chat and Agents.
-
-***
 
 ## Licensing and Pricing
 
@@ -108,89 +119,9 @@ https://github.com/features/copilot/pricing
 
 ***
 
-## Additional Environment Requirements for Agent-Based Development
-
-To work effectively with Copilot Agents (Designer, Planner, Builder), your development environment must also support the following:
-
-### Git Installed and Configured
-
-You must have Git installed and configured locally.
-Download: https://git-scm.com/
-
-Verify installation:
-```
-git --version
-```
-You should also configure:
-	•	user.name
-	•	user.email
-
-***
-
-### GitHub Access and Repository Cloning
-
-You must be able to:
-	•	Authenticate to GitHub (SSH or HTTPS)
-	•	Clone repositories locally
-	•	Push and pull changes
-
-Example:
-```
-git clone https://github.com/<your-org>/<your-repo>.git
-```
-Agent workflows assume:
-	•	The repository exists
-	•	The project structure is version-controlled
-	•	Commits can be created and pushed
-
-Without proper Git access, Builder-agent workflows (commit-per-subtask) will not function correctly.
-
-***
-
-### Build Toolchain Installed
-
-Depending on your stack (e.g., Spring Boot + Camel), you must install the required runtime and build tools, for example:
-	•	Java (JDK 17+ recommended)
-	•	Maven or Gradle
-
-Verify:
-```
-java -version
-mvn -version
-```
-Agents can generate code, but they rely on a working local build environment.
-
-***
-
-### Terminal Access Inside VS Code
-
-Builder agents use execution tools to:
-	•	Run builds
-	•	Execute tests
-	•	Validate compilation
-
-Ensure:
-	•	Integrated terminal works
-	•	Project builds successfully before starting agent orchestration
-
-***
-
-
-### Installing summary
-
-To successfully use Copilot Agents in a structured integration development workflow, you need:
-	•	VS Code + Copilot installed
-	•	Git properly configured
-	•	GitHub repository access
-	•	Working build toolchain
-
-Copilot Agents enhance development — but they operate inside a properly configured engineering environment.
-
-***
-
 # Installing Integation Development Agents to Your Project
 
-The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[docs/developing-integrations-with-copilot.md](docs/developing-integrations-with-copilot.md)**
+The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[docs/agent-workflow-setup-guide.md](docs/agent-workflow-setup-guide.md)**
 
 ## Step 1 — Getting this Repository as a Template to Your Project
 
@@ -205,11 +136,11 @@ git remote remove template
 
 After this, make sure:
 - You are in the root of your repository in VS Code
-- The file `docs/developing-integrations-with-copilot.md` exists 
+- The file `docs/agent-workflow-setup-guide.md` exists 
 - The directory `docs/rules` exists 
 - Copilot Chat is open
 
----
+
 
 ## Step 2 — Bootstrap the Environment from the Design Document
 
@@ -221,12 +152,13 @@ You are an environment setup assistant.
 
 Your task is to update this repository so that it fully implements the agent environment described in:
 
-docs/developing-integrations-with-copilot.md
+docs/agent-workflow-setup-guide.md
 
 Instructions:
 1. Read the entire file carefully before making changes.
-2. Identify all required files, folders, and configuration structures.
-3. Create or update the repository so that it matches the specification.
+2. Validate that the environment meets all requirements specified in Section 2 "Environment Requirements".
+3. Identify all required files, folders, and configuration structures.
+4. Create or update the repository so that it matches the specification.
 
 Specifically ensure:
 - `.github/agents/` exists
@@ -241,17 +173,23 @@ Rules:
 - If something already exists, update it to align with the specification rather than duplicating it.
 - Do not introduce new architectural concepts not defined in the specification document.
 
-After completing the base setup, check if the specification includes optional features (OPTIONs).
-For each OPTION found in docs/developing-integrations-with-copilot.md:
+After completing the base setup, validate:
+- All environment requirements from the specification are met
+- All required files and folders exist as specified
+- All agent definitions are correctly structured
+
+After setup and validation, check if the specification includes optional features (OPTIONs).
+For each OPTION found in docs/agent-workflow-setup-guide.md:
 - Ask the user if they want to enable it
 - If yes: follow the detailed instructions provided in that OPTION section
 
 After completing all changes:
 - List all created or modified files.
 - Briefly summarize what was aligned with the specification.
+- Report environment validation results.
 - Report which OPTIONs were enabled.
 ```
----
+
 
 ## Step 3 — Review the Changes
 
@@ -465,7 +403,7 @@ This often works, but for significant rule changes, starting a new chat is safer
 
 Once the agents are installed in your project, you can walk through the full workflow using the **Star Wars Character Search** example below.
 
----
+
 
 ## **Phase 1 — Architecture & Requirements (PRD)**
 
@@ -491,7 +429,7 @@ From the matching character, return:
 
 This will generate a PRD under `/docs/prd/`. **Review and approve** the PRD before continuing.
 
----
+
 
 ## **Phase 2 — Execution Planning (PLAN)**
 
@@ -510,7 +448,7 @@ Generate TASK documents under /docs/tasks/.
 
 **Review and approve** the generated plan and TASK definitions before continuing.
 
----
+
 
 ## **Phase 3 — TASK Implementation**
 
@@ -540,7 +478,7 @@ Run tests after implementation and report results.
 
 Repeat for each remaining TASK until the service is fully implemented.
 
----
+
 
 ## **Phase 4 — Change Handling & Re-planning**
 

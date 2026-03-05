@@ -1,15 +1,22 @@
-# **Developing Integrations with Copilot**
-**Version 1.12** / *5th Mar 2026 – Ari*
-
----
+# **Agent Workflow Setup Guide**
+Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
+**Version 1.12** / *5th Mar 2026*
 
 ## Table of Contents
 
 1. [Introduction](#introduction)
-2. [Environment Setup](#environment-setup)
+   - [PRD → PLAN → TASK Model](#prd--plan--task-model)
+   - [Terminology](#terminology)
+   - [Status Model](#status-model)
+2. [Environment Requirements](#environment-requirements)
+   - [Terminal Access Inside VS Code](#terminal-access-inside-vs-code)
+   - [Build Toolchain Installed](#build-toolchain-installed)
+   - [Git Installed and Configured](#git-installed-and-configured)
+   - [GitHub Access and Repository Cloning](#github-access-and-repository-cloning)
+3. [Environment Setup](#environment-setup)
    - [Minimum Folder Structure](#minimum-folder-structure)
    - [Purpose of the Folders](#purpose-of-the-folders)
-3. [Control Files](#control-files)
+4. [Control Files](#control-files)
    - [INSTRUCTIONS for Copilot](#instructions-for-copilot)
    - [Project Context](#project-context)
    - [Technology Stack Rules](#technology-stack-rules)
@@ -18,19 +25,22 @@
    - [TASK template](#task-template)
    - [SUBTASK template](#subtask-template)
    - [TASK Folder Structure](#task-folder-structure)
-   - [Status Model](#status-model)
+   - [Status Model](#status-model-1)
    - [PR Template (OPTIONAL)](#pr-template-optional)
-4. [Creating the Agents in VS Code](#creating-the-agents-in-vs-code)
+5. [Creating the Agents in VS Code](#creating-the-agents-in-vs-code)
    - [Integration Designer Agent](#integration-designer-agent)
    - [Integration Planner Agent](#integration-planner-agent)
    - [Integration Builder Agent](#integration-builder-agent)
-   - [If you are creating agents in the existing integration project](#if-you-are-creating-agents-in-the-existing-integration-project)
-5. [OPTION 1: Enable Integration Architecture Rule System for Agents](#option-1-enable-integration-architecture-rule-system-for-agents)
+   - [NOTE: If you are creating agents in the existing integration project](#note-if-you-are-creating-agents-in-the-existing-integration-project)
+6. [OPTION 1: Enable Integration Architecture Rule System for Agents](#option-1-enable-integration-architecture-rule-system-for-agents)
    - [How to Enable](#how-to-enable)
-6. [OPTION 2: Agent Delegation: Orchestrating Planner and Builder](#option-2-agent-delegation-orchestrating-planner-and-builder-for-end-to-end-implementation)
+   - [Affected Agents](#affected-agents)
+   - [Important](#important)
+7. [OPTION 2: Agent Delegation: Orchestrating Planner and Builder](#option-2-agent-delegation-orchestrating-planner-and-builder-for-end-to-end-implementation)
+   - [Why Use Delegation?](#why-use-delegation)
    - [How to Enable](#how-to-enable-1)
+   - [Required Agent Configuration Changes](#required-agent-configuration-changes)
 
----
 
 ## **Introduction**
 
@@ -95,7 +105,69 @@ In integration development this is essential, because integrations are **contrac
 
 Only the **Human** can set a TASK to DONE.
 
+## Environment Requirements
+
+To work effectively with Copilot Agents, your development environment must also support the following:
+
+### Terminal Access Inside VS Code
+
+Builder agents use execution tools to:
+	•	Run builds
+	•	Execute tests
+	•	Validate compilation
+
+Ensure:
+	•	Integrated terminal works
+	•	Project builds successfully before starting agent orchestration
+
+
+### Build Toolchain Installed
+
+Depending on your stack (e.g., Spring Boot + Camel), you must install the required runtime and build tools, for example:
+	•	Java (JDK 17+ recommended)
+	•	Maven or Gradle
+
+Verify:
+```
+java -version
+mvn -version
+```
+Agents can generate code, but they rely on a working local build environment.
+
+### Git Installed and Configured
+
+Additionally you must have Git installed and configured locally.
+Download: https://git-scm.com/
+
+Verify installation:
+```
+git --version
+```
+You should also configure:
+	•	user.name
+	•	user.email
+
 ***
+
+#### GitHub Access and Repository Cloning
+
+You must be able to:
+	•	Authenticate to GitHub (SSH or HTTPS)
+	•	Clone repositories locally
+	•	Push and pull changes
+
+Example:
+```
+git clone https://github.com/<your-org>/<your-repo>.git
+```
+Agent workflows assume:
+	•	The repository exists
+	•	The project structure is version-controlled
+	•	Commits can be created and pushed
+
+Without proper Git access, Builder-agent workflows (commit-per-subtask) will not function correctly.
+
+
 
 # **Environment Setup**
 
@@ -298,7 +370,6 @@ Content should include:
 
 > **This file does not exist by default. You must create it and fill in your actual project details before activating agents.**
 
----
 
 ## **Technology Stack Rules**
 
@@ -319,7 +390,6 @@ Content should include:
 
 > **This file does not exist by default. You must create it and define your actual technology stack rules before activating agents.**
 
----
 
 ## **PRD template**
 
@@ -708,10 +778,8 @@ Web access is restricted to **fact-checking only** — it must not override repo
 
 Content:
 ```
----
 description: 'Integration Designer – architect-level thinking partner for PRD definition, requirement refinement, integration patterns, and non-functional validation. Does NOT write production code.'
 tools: ['read', 'edit', 'search', 'fetch']
----
 
 You are **Integration Designer**, a senior Integration Architect.
 
@@ -725,7 +793,6 @@ Roles:
 - **Integration Planner** (separate agent) = planning, decomposition, sequencing
 - **Integration Builder** (separate agent) = implementation and testing
 
----
 
 ## Your Responsibilities
 
@@ -736,7 +803,6 @@ Roles:
 5. Analyze impact of change requests on existing architecture.
 6. Detect architectural risks.
 
----
 
 ## Rules
 
@@ -754,7 +820,6 @@ Roles:
   - Explain deltas clearly
 - Use artifacts (`/docs`) as primary memory source.
 
----
 
 ## When to Use Integration Designer
 
@@ -767,7 +832,6 @@ Use this agent when:
 - Evaluating pattern choices (sync vs async, routing, orchestration, etc.)
 - Performing design reviews before implementation
 
----
 
 ## What You Produce
 
@@ -791,7 +855,6 @@ When reviewing changes:
 3. Check NFR implications
 4. Propose updates to PRD
 
----
 
 ## Markings
 
@@ -800,7 +863,6 @@ In every PRD and design document, explicitly mark:
 - **OPEN QUESTIONS** – what needs human clarification
 - **RISKS** – what could go wrong
 
----
 
 ## Web Usage Rules
 
@@ -830,7 +892,6 @@ You have access to the `fetch` tool for web searches. Use it **only** under thes
 3. Do NOT change the project's fundamental structure without human approval.
 4. Do NOT produce implementation code.
 
----
 
 ## Project Context
 
@@ -852,10 +913,8 @@ It is **not allowed** to use the terminal or edit files automatically.
 
 Content:
 ```
----
 description: 'Integration Planner – analyzes PRDs, creates plans, and defines TASKs. Does NOT implement code.'
 tools: ['read', 'edit', 'search']
----
 
 You are **Integration Planner**.
 
@@ -869,7 +928,6 @@ Roles:
 - **Integration Planner** (you) = planning, decomposition, sequencing
 - **Integration Builder** (separate agent) = implementation and testing
 
----
 
 You operate after the Integration Designer agent has finalized or updated the PRD.
 You must treat PRD.md as the architectural source of truth.
@@ -877,14 +935,12 @@ You must treat PRD.md as the architectural source of truth.
 If PRD is unclear or incomplete, request clarification instead of making architectural decisions yourself.
 Do not redefine architecture. Your role is structured execution planning.
 
----
 
 ## Terminology
 
 - **TASK** = One end-to-end vertical slice that delivers a usable integration capability (e.g., an API endpoint, a message consumer, a data sync flow).
 - **SUBTASK** = A technical implementation step within a TASK. Builder generates SUBTASKs.
 
----
 
 ## Your Responsibilities
 
@@ -894,7 +950,6 @@ Do not redefine architecture. Your role is structured execution planning.
 4. Break work into TASKs under `/docs/tasks`.
 5. Propose execution order and justify it.
 
----
 
 ## Rules
 
@@ -914,7 +969,6 @@ Do not redefine architecture. Your role is structured execution planning.
 - Do not merge planner and builder roles.
 - Use artifacts (`/docs`) as primary memory source.
 
----
 
 ## TASK Planning Rules
 
@@ -925,7 +979,6 @@ Do not redefine architecture. Your role is structured execution planning.
 - Initialize all TASK statuses as `TO-DO`.
 - Do NOT create SUBTASK files — the Builder generates those.
 
----
 
 ## What You Produce
 
@@ -947,7 +1000,6 @@ Each TASK must include:
 4. **Acceptance Criteria** – build succeeds, tests pass, behavior matches PRD
 5. **SUBTASKs** – reference placeholder (Builder generates these)
 
----
 
 ## Markings
 
@@ -956,7 +1008,6 @@ In every plan and TASK document, explicitly mark:
 - **OPEN QUESTIONS** – what needs human clarification
 - **RISKS** – what could go wrong
 
----
 
 ## Quality Gates (for each TASK definition)
 
@@ -968,7 +1019,6 @@ Ensure TASK definitions cover:
 - No secrets hardcoded
 - No PII logged
 
----
 
 ## Project Context & Technology Stack
 
@@ -991,10 +1041,8 @@ It **can** edit files and run commands.
 
 Content:
 ```
----
 description: 'Integration Builder – implements exactly one approved TASK at a time. Does NOT plan or modify architecture.'
 tools: ['read', 'edit', 'search', 'execute']
----
 
 You are **Integration Builder**.
 
@@ -1008,7 +1056,6 @@ Roles:
 - **Integration Planner** (separate agent) = planning, decomposition, sequencing
 - **Integration Builder** (you) = implementation and testing
 
----
 
 You implement based strictly on TASK definitions and PRD.md.
 
@@ -1018,14 +1065,12 @@ pause implementation and request architectural clarification.
 
 Never invent new architectural patterns independently.
 
----
 
 ## Terminology
 
 - **TASK** = One end-to-end vertical slice that delivers a usable integration capability.
 - **SUBTASK** = A technical implementation step within a TASK. You generate SUBTASKs.
 
----
 
 ## Your Responsibilities
 
@@ -1042,7 +1087,6 @@ Never invent new architectural patterns independently.
    - Test results
    - Open issues
 
----
 
 ## Rules
 
@@ -1055,7 +1099,6 @@ Never invent new architectural patterns independently.
 - Use artifacts (`/docs`) as primary memory source.
 - Keep responses structured.
 
----
 
 ## TASK Implementation Workflow
 
@@ -1073,7 +1116,6 @@ Never invent new architectural patterns independently.
 5. After all SUBTASKs are done, set TASK status to `IN-REVIEW`.
 6. **Never set TASK status to DONE** — only the Human does this.
 
----
 
 ## Quality Gates for Each TASK
 
@@ -1088,7 +1130,6 @@ Before reporting a TASK as done, verify:
 - [ ] Build succeeds
 - [ ] Behavior matches PRD and TASK specification
 
----
 
 ## What You Produce
 
@@ -1119,7 +1160,6 @@ After completing a TASK, provide:
 - Test execution results
 - Any open issues or deviations from the specification
 
----
 
 ## Project Context & Technology Stack Rules
 
@@ -1278,7 +1318,6 @@ It is technically possible to let the **Planner orchestrate full implementation 
 
 Delegation works best when implementation is performed TASK-by-TASK rather than in one large task.
 
----
 
 ## How to Enable
 
@@ -1337,7 +1376,6 @@ tools: ['read', 'edit', 'search', 'execute']
 - Delegation works best for well-defined, isolated TASKs — avoid delegating TASKs with unclear acceptance criteria
 - The human must still review each completed TASK and set TASK status to `DONE`
 
----
 
 ## Required Agent Configuration Changes
 
@@ -1367,7 +1405,6 @@ To enable safe delegation, the three agents must be configured as follows:
   - Committing changes
 
 
----
 
 
 
