@@ -18,18 +18,18 @@ The model follows the principle:
 
 ## Table of Contents
 
-* [Purpose](#purpose)
-* [Workflow Model](#workflow-model)
-* [Installing Agents to Your Project](#installing-agents-to-your-project)
+1. [Purpose](#purpose)
+2. [Workflow Model](#workflow-model)
+3. [Installing Agents to Your Project](#installing-agents-to-your-project)
    - [Step 1 — Getting this Repository as a Template to Your Project](#step-1--getting-this-repository-as-a-template-to-your-project)
    - [Step 2 — Bootstrap the Environment from the Design Document](#step-2--bootstrap-the-environment-from-the-design-document)
    - [Step 3 — Review the Changes](#step-3--review-the-changes)
-* [Using the Agents](#using-the-agents)
+4. [Using the Agents](#using-the-agents)
    - [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
    - [Handling the context](#handling-the-context)
-   - [Workflow Phases](#workflow-phases)
-   - [When Instructions Have Changed](#when-instructions-have-changed)
-* [Demo Example](#demo-example)
+5. [Workflow Phases](#workflow-phases)
+6. [When Instructions Have Changed](#when-instructions-have-changed)
+7. [Demo Example](#demo-example)
 
 ---
 
@@ -84,7 +84,7 @@ Each TASK:
 
 # Installing Agents to Your Project
 
-The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: `docs/developing-integrations-with-copilot.md`
+The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[docs/developing-integrations-with-copilot.md](docs/developing-integrations-with-copilot.md)**
 
 ## Step 1 — Getting this Repository as a Template to Your Project
 
