@@ -18,18 +18,18 @@ The model follows the principle:
 
 ## Table of Contents
 
-1. [Purpose](#purpose)
-2. [Workflow Model](#workflow-model)
-3. [Installing Agents to Your Project](#installing-agents-to-your-project)
+* [Purpose](#purpose)
+* [Workflow Model](#workflow-model)
+* [Installing Agents to Your Project](#installing-agents-to-your-project)
    - [Step 1 — Getting this Repository as a Template to Your Project](#step-1--getting-this-repository-as-a-template-to-your-project)
    - [Step 2 — Bootstrap the Environment from the Design Document](#step-2--bootstrap-the-environment-from-the-design-document)
    - [Step 3 — Review the Changes](#step-3--review-the-changes)
-4. [Using the Agents](#using-the-agents)
+* [Using the Agents](#using-the-agents)
    - [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
    - [Handling the context](#handling-the-context)
-5. [Workflow Phases](#workflow-phases)
-6. [When Instructions Have Changed](#when-instructions-have-changed)
-7. [Demo Example](#demo-example)
+   - [Workflow Phases](#workflow-phases)
+   - [When Instructions Have Changed](#when-instructions-have-changed)
+* [Demo Example](#demo-example)
 
 ---
 
@@ -76,9 +76,11 @@ Each TASK:
 - Contains a `TASK-XX.md` root document
 - May contain multiple `SUBTASK-XX.md` files
 
----
+
 
 ***
+
+
 
 # Installing Agents to Your Project
 
@@ -175,8 +177,6 @@ The setup assistant generates two files that **require your input before agents 
 
 > **Without accurate project context and technology stack rules, agents will produce generic or incorrect outputs.** This is the single most important manual step in the setup.
 
----
-
 
 
 ***
@@ -255,48 +255,6 @@ Planner:
 Builder:
 
     Act as Integration Builder. Implement TASK-02 from /docs/tasks. Ignore planning discussions.
-
-***
-
-
-
-Integration development needs structure because it involves:
-
-*   Multiple systems
-*   Contracts
-*   Error handling
-*   Retry & idempotency
-*   Performance & reliability
-*   Observability
-
-Without structure:
-
-*   Code is developed before NFR decisions
-*   Retry logic added late
-*   Observability incomplete
-*   Tests miss error paths
-
-The model prevents this by enforcing:
-
-1.  **PRD:** explicit decisions
-2.  **PLAN:** structured architecture & sequencing
-3.  **TASK:** real end‑to‑end increments
-
-TASKs are:
-
-*   testable
-*   production‑ready
-*   compliant
-*   small
-
-AI benefits because:
-
-*   PRD gives context
-*   PLAN gives decomposition
-*   TASK gives precise implementation contract
-
-Humans maintain architecture.  
-AI accelerates implementation.
 
 ***
 
