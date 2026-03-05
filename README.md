@@ -19,17 +19,16 @@ The model follows the principle:
 ## Table of Contents
 
 1. [Purpose](#purpose)
-2. [Workflow Model](#workflow-model)
-3. [Installing Agents to Your Project](#installing-agents-to-your-project)
+2. [Installing Agents to Your Project](#installing-agents-to-your-project)
    - [Step 1 — Getting this Repository as a Template to Your Project](#step-1--getting-this-repository-as-a-template-to-your-project)
    - [Step 2 — Bootstrap the Environment from the Design Document](#step-2--bootstrap-the-environment-from-the-design-document)
    - [Step 3 — Review the Changes](#step-3--review-the-changes)
-4. [Using the Agents](#using-the-agents)
+3. [Using the Agents](#using-the-agents)
    - [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
    - [Handling the context](#handling-the-context)
-5. [Workflow Phases](#workflow-phases)
-6. [When Instructions Have Changed](#when-instructions-have-changed)
-7. [Demo Example](#demo-example)
+4. [Workflow Phases](#workflow-phases)
+5. [When Instructions Have Changed](#when-instructions-have-changed)
+6. [Demo Example](#demo-example)
 
 ---
 
@@ -48,39 +47,6 @@ It demonstrates how to:
 It is designed for real-world API and integration services (e.g., aggregation, enrichment, transformation).
 
 ---
-
-# Workflow Model
-
-## 1. PRD (Product Requirements Document)
-Created by **Integration Designer**.
-
-Defines:
-- Integration flow
-- Canonical response model
-- Business rules
-- Non-functional requirements
-- Error handling policy
-
-PRD is the architectural source of truth.
-
----
-
-## 2. PLAN → TASK Structure 
-
-The Integration Planner translates PRD into vertical delivery units.
-
-Each TASK:
-
-- Represents one end-to-end capability
-- Has its own folder under `/docs/tasks/TASK-XX/`
-- Contains a `TASK-XX.md` root document
-- May contain multiple `SUBTASK-XX.md` files
-
-
-
-***
-
-
 
 # Installing Agents to Your Project
 
@@ -263,6 +229,15 @@ Builder:
 
 ### **Phase 1 — Architecture & Requirements (PRD)**
 
+A **PRD** (Product Requirements Document) is created by the **Integration Designer** and defines:
+- Integration flow
+- Canonical response model
+- Business rules
+- Non-functional requirements
+- Error handling policy
+
+**PRD is the architectural source of truth.**
+
 Designer + Human:
 
 *   Define problem
@@ -278,6 +253,15 @@ Human approves.
 
 ### **Phase 2 — Execution Planning (PLAN)**
 
+The **Integration Planner** translates the PRD into vertical delivery units.
+
+A **PLAN** breaks work into **VERTICAL SLICE**s and **TASK**s:
+
+- Each **TASK** represents one **end-to-end capability**
+- Has its own folder under `/docs/tasks/TASK-XX/`
+- Contains a `TASK-XX.md` root document
+- May contain multiple `SUBTASK-XX.md` files
+
 *Open a new chat and use Integration Planner:*
 
     Create plan from approved PRD. Include 3–6 TASKs.
@@ -285,6 +269,10 @@ Human approves.
 Human approves.
 
 ### **Phase 3 — TASK Implementation**
+
+Each **TASK** is a thin but end-to-end implementation of one complete integration flow — from source system to target system — including routing, transformation, error handling, and monitoring.
+
+One **TASK** delivers a usable integration capability (e.g., an API endpoint, a message consumer, a data sync flow).
 
 *Open a new chat and use Integration Builder:*
 
