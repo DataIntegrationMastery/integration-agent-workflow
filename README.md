@@ -17,6 +17,15 @@ Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
 
 ---
 
+# 📚 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [Developing Integrations with Copilot](docs/developing-integrations-with-copilot.md) | Main workflow specification – agent roles, folder structure, status model |
+| [Integration Architecture Rule System](docs/rules/integration-architecture-rule-system/README.md) | Architecture rules, design principles, pattern selection, and validation checklists |
+
+---
+
 # 🎯 Purpose
 
 This repository demonstrates how to:
