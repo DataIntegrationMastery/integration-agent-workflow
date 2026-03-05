@@ -19,16 +19,22 @@ The model follows the principle:
 ## Table of Contents
 
 1. [Purpose](#purpose)
-2. [Installing Agents to Your Project](#installing-agents-to-your-project)
+   - [Why Not Use an Autonomous Coding Agent?](#why-not-use-an-autonomous-coding-agent)
+2. [Installing VS Code and GitHub Copilot](#installing-vs-code-and-github-copilot)
+   - [Install Visual Studio Code](#install-visual-studio-code)
+   - [Install GitHub Copilot Extension](#install-github-copilot-extension)
+   - [Licensing and Pricing](#licensing-and-pricing)
+   - [Additional Environment Requirements for Agent-Based Development](#additional-environment-requirements-for-agent-based-development)
+3. [Installing Integation Development Agents to Your Project](#installing-integation-development-agents-to-your-project)
    - [Step 1 — Getting this Repository as a Template to Your Project](#step-1--getting-this-repository-as-a-template-to-your-project)
    - [Step 2 — Bootstrap the Environment from the Design Document](#step-2--bootstrap-the-environment-from-the-design-document)
    - [Step 3 — Review the Changes](#step-3--review-the-changes)
-3. [Using the Agents](#using-the-agents)
+4. [Using the Agents](#using-the-agents)
    - [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
    - [Handling the context](#handling-the-context)
-4. [Workflow Phases](#workflow-phases)
-5. [When Instructions Have Changed](#when-instructions-have-changed)
-6. [Demo Example](#demo-example)
+   - [Workflow Phases](#workflow-phases)
+   - [When Controll files must be Changed](#when-controll-files-must-be-changed)
+5. [Demo Example](#demo-example)
 
 ---
 
@@ -46,9 +52,143 @@ It demonstrates how to:
 
 It is designed for real-world API and integration services (e.g., aggregation, enrichment, transformation).
 
----
+**NOTE:** This Agent flow methodology is based on GitHub Copilot with precisely defined different agents in the VS Code development environment (can also be applied to other IDEs). More detailed descriptions of these agents can be found in the instructions: **[docs/developing-integrations-with-copilot.md](docs/developing-integrations-with-copilot.md)**
 
-# Installing Agents to Your Project
+
+## Why Not Use an Autonomous Coding Agent?
+
+Tools like Claude Code are powerful — but they operate at a different level
+of abstraction. A single autonomous agent receives a high-level goal and
+executes independently, combining architecture, planning, and implementation
+in one loop.
+
+For integration development, this is a problem.
+
+Integration work is not a coding task. It is a contract between systems.
+Every decision — retry policy, error handling, idempotency, observability —
+has architectural consequences that cannot be delegated to an autonomous loop.
+
+The three-agent model here makes a deliberate choice:
+
+- The **human remains the architect** — not the AI
+- Each phase requires **explicit approval** before the next begins
+- The **audit trail is structural** — not accidental
+
+An autonomous agent can write code faster.
+This model produces integration solutions you can reason about, defend, and maintain.
+
+> Architecture is a human responsibility.
+> AI is the accelerator, not the decision-maker.
+
+***
+
+# Installing VS Code and GitHub Copilot
+
+To get started, install Visual Studio Code and the GitHub Copilot extension using the official documentation to ensure you always follow the latest instructions for your operating system.
+
+## Install Visual Studio Code
+
+Download and follow the installation guide for Windows or macOS:
+https://code.visualstudio.com/
+
+## Install GitHub Copilot Extension
+
+After installing VS Code, open the Extensions marketplace and install GitHub Copilot, or follow the official setup guide here:
+https://docs.github.com/en/copilot/getting-started-with-github-copilot
+
+The official documentation includes the most up-to-date steps for Windows and Mac, account authentication, subscription requirements, and enabling Copilot Chat and Agents.
+
+***
+
+## Licensing and Pricing
+
+Visual Studio Code is free to use. GitHub Copilot requires a paid subscription for most professional use cases. GitHub offers Individual, Business, and Enterprise plans. Pricing and feature sets may change over time, so always verify the latest details on the official page:
+
+https://github.com/features/copilot/pricing
+
+***
+
+## Additional Environment Requirements for Agent-Based Development
+
+To work effectively with Copilot Agents (Designer, Planner, Builder), your development environment must also support the following:
+
+### Git Installed and Configured
+
+You must have Git installed and configured locally.
+Download: https://git-scm.com/
+
+Verify installation:
+```
+git --version
+```
+You should also configure:
+	•	user.name
+	•	user.email
+
+***
+
+### GitHub Access and Repository Cloning
+
+You must be able to:
+	•	Authenticate to GitHub (SSH or HTTPS)
+	•	Clone repositories locally
+	•	Push and pull changes
+
+Example:
+```
+git clone https://github.com/<your-org>/<your-repo>.git
+```
+Agent workflows assume:
+	•	The repository exists
+	•	The project structure is version-controlled
+	•	Commits can be created and pushed
+
+Without proper Git access, Builder-agent workflows (commit-per-subtask) will not function correctly.
+
+***
+
+### Build Toolchain Installed
+
+Depending on your stack (e.g., Spring Boot + Camel), you must install the required runtime and build tools, for example:
+	•	Java (JDK 17+ recommended)
+	•	Maven or Gradle
+
+Verify:
+```
+java -version
+mvn -version
+```
+Agents can generate code, but they rely on a working local build environment.
+
+***
+
+### Terminal Access Inside VS Code
+
+Builder agents use execution tools to:
+	•	Run builds
+	•	Execute tests
+	•	Validate compilation
+
+Ensure:
+	•	Integrated terminal works
+	•	Project builds successfully before starting agent orchestration
+
+***
+
+
+### Installing summary
+
+To successfully use Copilot Agents in a structured integration development workflow, you need:
+	•	VS Code + Copilot installed
+	•	Git properly configured
+	•	GitHub repository access
+	•	Working build toolchain
+
+Copilot Agents enhance development — but they operate inside a properly configured engineering environment.
+
+***
+
+# Installing Integation Development Agents to Your Project
 
 The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[docs/developing-integrations-with-copilot.md](docs/developing-integrations-with-copilot.md)**
 
@@ -299,7 +439,7 @@ If new requirements or information appears:
 
 ***
 
-## **When Instructions Have Changed**
+## **When Controll files must be Changed**
 
 If you update `.github/copilot-instructions.md` during development, make sure the agents actually use the new rules.
 
