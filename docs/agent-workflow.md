@@ -97,7 +97,7 @@ https://github.com/features/copilot/pricing
 
 # Installing Integration Development Agents to Your Project
 
-The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[docs/agent-workflow-setup-guide.md](docs/agent-workflow-setup-guide.md)**
+The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[agent-workflow-setup-guide.md](agent-workflow-setup-guide.md)**
 
 ## Step 1 — Getting this Repository as a Template to Your Project
 
@@ -380,7 +380,6 @@ This often works, but for significant rule changes, starting a new chat is safer
 Once the agents are installed in your project, you can walk through the full workflow using the **Star Wars Character Search** example below.
 
 
-
 ## **Phase 1 — Architecture & Requirements (PRD)**
 
 **Open a new chat** with **Integration Designer Agent**. Choose the latest **Claude Opus** model and send the following prompt:
@@ -404,7 +403,6 @@ From the matching character, return:
 ```
 
 This will generate a PRD under `/docs/prd/`. **Review and approve** the PRD before continuing.
-
 
 
 ## **Phase 2 — Execution Planning (PLAN)**

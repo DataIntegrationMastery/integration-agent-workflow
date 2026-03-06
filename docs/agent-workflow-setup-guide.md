@@ -1,6 +1,6 @@
 # **Agent Workflow Setup Guide**
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.12** / *5th Mar 2026*
+**Version 1.13** / *6th Mar 2026*
 
 ## Table of Contents
 
@@ -32,11 +32,16 @@ Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
    - [Integration Planner Agent](#integration-planner-agent)
    - [Integration Builder Agent](#integration-builder-agent)
    - [NOTE: If you are creating agents in the existing integration project](#note-if-you-are-creating-agents-in-the-existing-integration-project)
-6. [OPTION 1: Enable Integration Architecture Rule System for Agents](#option-1-enable-integration-architecture-rule-system-for-agents)
+6. [OPTION 1: Initialize Project Context and Technology Stack from Environment](#option-1-initialize-project-context-and-technology-stack-from-environment)
+   - [What It Does](#what-it-does)
+   - [How to Use](#how-to-use)
+   - [What Gets Populated](#what-gets-populated)
+   - [Important](#important)
+7. [OPTION 2: Enable Integration Architecture Rule System for Agents](#option-2-enable-integration-architecture-rule-system-for-agents)
    - [How to Enable](#how-to-enable)
    - [Affected Agents](#affected-agents)
-   - [Important](#important)
-7. [OPTION 2: Agent Delegation: Orchestrating Planner and Builder](#option-2-agent-delegation-orchestrating-planner-and-builder-for-end-to-end-implementation)
+   - [Important](#important-1)
+8. [OPTION 3: Agent Delegation: Orchestrating Planner and Builder](#option-3-agent-delegation-orchestrating-planner-and-builder-for-end-to-end-implementation)
    - [Why Use Delegation?](#why-use-delegation)
    - [How to Enable](#how-to-enable-1)
    - [Required Agent Configuration Changes](#required-agent-configuration-changes)
@@ -1256,7 +1261,69 @@ Key things to verify and update:
 
 ***
 
-# **OPTION 1:** Enable Integration Architecture Rule System for Agents
+# **OPTION 1:** Initialize Project Context and Technology Stack from Environment
+
+The control files `project-context.md` and `technology-stack.md` define the project identity and technology constraints that all three agents depend on. Instead of filling these files manually, you can ask **GitHub Copilot Chat** to populate them automatically based on project files and the local development environment.
+
+## What It Does
+
+Copilot reads your project's build configuration (e.g., `pom.xml` or `build.gradle`), source code structure, and local toolchain versions, then fills in the two control files with concrete values derived from the actual environment.
+
+## How to Use
+
+Open **GitHub Copilot Chat** in VS Code (not an agent chat — a regular Copilot Chat session) and send the following prompt:
+
+```
+Read the project build file (pom.xml or build.gradle), the source code structure
+under /src, and check the local Java and build tool versions from the terminal.
+
+Based on what you find, fill in the following control files with actual values:
+- /docs/rules/project-context.md
+- /docs/rules/technology-stack.md
+
+Use the existing section headings in each file. Replace placeholder comments
+with concrete values. If a value cannot be determined from the project files
+or environment, write "Not yet defined" with a short explanation.
+```
+
+Review the generated content and adjust any values that need correction.
+
+## What Gets Populated
+
+### project-context.md
+
+| Section | Source |
+|---------|--------|
+| Project Name | `<name>` or `<artifactId>` from build file |
+| Language & Version | `<java.version>` property from build file |
+| Framework | Parent POM or dependency (e.g., Spring Boot version) |
+| Build Tool | Detected from `pom.xml` (Maven) or `build.gradle` (Gradle) |
+| Integration Framework | Integration dependencies in build file, or "Not yet defined" |
+| API Specs Location | Presence of `/openapi` or similar folder, or "Not yet defined" |
+| Deployment Artifacts and Target | Build plugins and packaging type, or "Not yet defined" |
+| Package Structure | Base package from main application class |
+
+### technology-stack.md
+
+| Section | Source |
+|---------|--------|
+| Mandatory Framework Rules | Framework and version from build file |
+| Forbidden Libraries | Inferred from framework version (e.g., `jakarta.*` vs `javax.*`) |
+| Required Annotations | Framework conventions (e.g., `@SpringBootApplication`, `@RestController`) |
+| Test Framework | Test dependencies from build file (e.g., JUnit 5, Mockito) |
+| Code Style Rules | Standard conventions for the detected framework |
+| Terminology | Default integration terminology |
+
+## Important
+
+- Always **review the generated content** before activating agents — Copilot infers values but may not capture project-specific conventions.
+- If the project has no integration framework configured yet, the field will be set to "Not yet defined" — this is expected for new projects.
+- You can re-run this step at any time if the project setup changes (e.g., new dependencies added).
+- This step is **optional** — you can always fill in the control files manually.
+
+***
+
+# **OPTION 2:** Enable Integration Architecture Rule System for Agents
 
 The **Integration Architecture Rule System** provides a deterministic, rule-based framework that guides the **Designer** and **Planner** agents to make structured, traceable architecture decisions instead of relying on general AI knowledge.
 
@@ -1297,7 +1364,7 @@ The guide describes:
 
 ***
 
-# **OPTION 2:** Agent Delegation: Orchestrating Planner and Builder for End-to-End Implementation
+# **OPTION 3:** Agent Delegation: Orchestrating Planner and Builder for End-to-End Implementation
 
 It is technically possible to let the **Planner orchestrate full implementation together with the Builder** by using **agent delegation**. In this model, once the PRD is finalized, the Planner converts it into structured TASKs and delegates each TASK to the Builder for implementation, testing, and committing.
 
