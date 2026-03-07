@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.9** / *5th Mar 2026*
+**Version 1.10** / *7th Mar 2026*
 
 
 
@@ -23,13 +23,15 @@ Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
      - [Phase 1 — Architecture & Requirements (PRD)](#phase-1--architecture--requirements-prd)
      - [Phase 2 — Execution Planning (PLAN)](#phase-2--execution-planning-plan)
      - [Phase 3 — TASK Implementation](#phase-3--task-implementation)
-     - [Phase 4 — Change Handling & Re-planning](#phase-4--change-handling--re-planning)
+     - [Phase 4 — Demo & Validation](#phase-4--demo--validation)
+     - [Phase 5 — Change Handling & Re-planning](#phase-5--change-handling--re-planning)
    - [When Control Files Must Be Changed](#when-control-files-must-be-changed)
 5. [Demo Example](#demo-example)
    - [Phase 1 — Architecture & Requirements (PRD)](#phase-1--architecture--requirements-prd-1)
    - [Phase 2 — Execution Planning (PLAN)](#phase-2--execution-planning-plan-1)
    - [Phase 3 — TASK Implementation](#phase-3--task-implementation-1)
    - [Phase 4 — Change Handling & Re-planning](#phase-4--change-handling--re-planning-1)
+   - [Phase 5 — Demo & Validation](#phase-5--demo--validation-1)
 
 
 
@@ -339,7 +341,17 @@ Builder:
 *   Fixes issues
 *   Reports
 
-### **Phase 4 — Change Handling & Re‑planning**
+### **Phase 4 — Demo & Validation**
+
+Once all TASKs are complete, request a live demonstration:
+
+*In the same chat with Integration Builder:*
+
+    Demonstrate this integration with one happy-path test case using curl.
+
+Builder executes a sample request and displays the response.
+
+### **Phase 5 — Change Handling & Re‑planning**
 
 If new requirements or information appears:
 
@@ -410,7 +422,7 @@ This will generate a PRD under `/docs/prd/`. **Review and approve** the PRD befo
 **Open a new chat** with **Integration Planner Agent** (do not continue in the Designer chat). Choose the latest **Claude Opus** model and send the following prompt:
 
 ```
-You are Integration Planner. Ignore previous designer discussions.
+You are Integration Planner. Ignore previous designer and planner discussions.
 
 Read the approved PRD under /docs/prd/ for the Star Wars Character Search service.
 
@@ -429,7 +441,7 @@ Generate TASK documents under /docs/tasks/.
 **Open a new chat** with **Integration Builder Agent** (do not continue in the Planner chat). Choose the latest **Claude Sonnet** model and send the following prompt for the first TASK:
 
 ```
-You are Integration Builder. Ignore previous designer and planner discussions.
+You are Integration Builder. Ignore previous discussions.
 
 Implement TASK-01 exactly as defined in /docs/tasks/TASK-01/.
 
@@ -451,8 +463,6 @@ Run tests after implementation and report results.
 ```
 
 Repeat for each remaining TASK until the service is fully implemented.
-
-
 
 ## **Phase 4 — Change Handling & Re-planning**
 
@@ -478,4 +488,31 @@ Review the changes, update the plan, and adjust or create new TASKs as needed un
 ```
 
 Then continue implementation with the **Integration Builder Agent** as in Phase 3.
+
+
+
+## **Phase 5 — Demo & Validation**
+
+Once all TASKs are implemented and tests pass, request a live demonstration from the Builder. In the same **Integration Builder Agent** chat, send:
+
+```
+Looks good, but as one final request, I'd like you—as Integration Builder—to demonstrate this integration's functionality with one happy-path test case.
+
+A curl command executed in the terminal should be sufficient for the demo environment.
+```
+
+The Builder will:
+1. Start the service (if not already running)
+2. Execute a sample request using `curl`
+3. Display the response and confirm the integration works end-to-end
+
+This demo session validates that:
+- The service starts correctly
+- External API calls work as expected
+- Response formatting matches the PRD requirements
+- Error handling is in place (optionally test an edge case)
+
+> **Tip:** You can request additional demo scenarios, such as testing error handling with an invalid character name, or verifying timeout behavior.
+
+
 
