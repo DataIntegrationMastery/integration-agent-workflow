@@ -1,6 +1,6 @@
 # **Agent Workflow Setup Guide**
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.13** / *6th Mar 2026*
+**Version 1.14** / *7th Mar 2026*
 
 ## Table of Contents
 
@@ -37,6 +37,8 @@ Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
    - [How to Use](#how-to-use)
    - [What Gets Populated](#what-gets-populated)
    - [Important](#important)
+   - [Default Stack for New Integration Projects](#default-stack-for-new-integration-projects)
+     - [Why This Stack?](#why-this-stack)
 7. [OPTION 2: Enable Integration Architecture Rule System for Agents](#option-2-enable-integration-architecture-rule-system-for-agents)
    - [How to Enable](#how-to-enable)
    - [Affected Agents](#affected-agents)
@@ -1320,6 +1322,46 @@ Review the generated content and adjust any values that need correction.
 - If the project has no integration framework configured yet, the field will be set to "Not yet defined" — this is expected for new projects.
 - You can re-run this step at any time if the project setup changes (e.g., new dependencies added).
 - This step is **optional** — you can always fill in the control files manually.
+
+
+## Default Stack for New Integration Projects
+
+If the environment has **no integration framework defined**, instruct Copilot to use the following **recommended open-source integration stack** as defaults:
+
+```
+If the project has no integration framework configured yet, use the following
+defaults as the recommended open-source integration stack:
+
+Integration Framework: Apache Camel (latest stable version)
+Runtime Framework: Quarkus (latest stable version)
+Build Tool: Maven
+Language: Java 21+
+
+Additional recommended components:
+- REST Client: Quarkus REST Client (MicroProfile)
+- Messaging: Apache Kafka or ActiveMQ Artemis
+- Observability: OpenTelemetry + Micrometer
+- Health & Metrics: SmallRye Health, SmallRye Metrics
+- Configuration: MicroProfile Config
+- Testing: JUnit 5, Camel Test, REST Assured, Testcontainers
+- API Documentation: SmallRye OpenAPI
+- JSON Processing: Jackson
+- Containerization: Jib or Docker multi-stage builds
+
+Apply these defaults to both project-context.md and technology-stack.md.
+```
+
+### Why This Stack?
+
+| Component | Rationale |
+|-----------|-----------|
+| **Apache Camel** | Industry-standard integration framework with 300+ connectors, enterprise integration patterns, and excellent testability |
+| **Quarkus** | Cloud-native runtime with fast startup, low memory footprint, native compilation support, and excellent developer experience |
+| **OpenTelemetry** | Vendor-neutral observability standard for distributed tracing, metrics, and logging |
+| **Testcontainers** | Enables realistic integration testing with real databases, message brokers, and external services |
+| **MicroProfile** | Standardized APIs for cloud-native Java (config, health, metrics, REST client) |
+
+This stack provides a production-ready foundation for enterprise integration development with strong community support and no vendor lock-in.
 
 ***
 
