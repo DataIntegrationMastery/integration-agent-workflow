@@ -1,6 +1,6 @@
 # **Agent Workflow Setup Guide**
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.14** / *7th Mar 2026*
+**Version 1.15** / *8th Mar 2026*
 
 ## Table of Contents
 

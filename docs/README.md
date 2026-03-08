@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.10** / *7th Mar 2026*
+**Version 1.11** / *8th Mar 2026*
 
 
 
@@ -99,7 +99,7 @@ https://github.com/features/copilot/pricing
 
 # Installing Integration Development Agents to Your Project
 
-The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[agent-workflow-setup-guide.md](agent-workflow-setup-guide.md)**
+The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[installation/agent-workflow-setup-guide.md](installation/agent-workflow-setup-guide.md)**
 
 ## Step 1 — Getting this Repository as a Template to Your Project
 
@@ -114,7 +114,7 @@ git remote remove template
 
 After this, make sure:
 - You are in the root of your repository in VS Code
-- The file `docs/agent-workflow-setup-guide.md` exists 
+- The file `docs/installation/agent-workflow-setup-guide.md` exists 
 - The directory `docs/rules` exists 
 - Copilot Chat is open
 
@@ -130,7 +130,7 @@ You are an environment setup assistant.
 
 Your task is to update this repository so that it fully implements the agent environment described in:
 
-docs/agent-workflow-setup-guide.md
+docs/installation/agent-workflow-setup-guide.md
 
 Instructions:
 1. Read the entire file carefully before making changes.
@@ -157,7 +157,7 @@ After completing the base setup, validate:
 - All agent definitions are correctly structured
 
 After setup and validation, check if the specification includes optional features (OPTIONs).
-For each OPTION found in docs/agent-workflow-setup-guide.md:
+For each OPTION found in docs/installation/agent-workflow-setup-guide.md:
 - Ask the user if they want to enable it
 - If yes: follow the detailed instructions provided in that OPTION section
 
