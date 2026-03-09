@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.11** / *8th Mar 2026*
+**Version 1.12** / *9th Mar 2026*
 
 
 
@@ -32,6 +32,9 @@ Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
    - [Phase 3 — TASK Implementation](#phase-3--task-implementation-1)
    - [Phase 4 — Change Handling & Re-planning](#phase-4--change-handling--re-planning-1)
    - [Phase 5 — Demo & Validation](#phase-5--demo--validation-1)
+6. [Removing Agent Workflow from a Project](#removing-agent-workflow-from-a-project)
+   - [Removal Prompt](#removal-prompt)
+   - [Important](#important)
 
 
 
@@ -514,5 +517,38 @@ This demo session validates that:
 
 > **Tip:** You can request additional demo scenarios, such as testing error handling with an invalid character name, or verifying timeout behavior.
 
+***
 
+# Removing Agent Workflow from a Project
+
+If you need to remove the Agent Workflow setup from your project, use the following prompt. This prompt dynamically references the setup guide to ensure all components (including any new features added in future versions) are properly removed.
+
+## Removal Prompt
+
+```
+Read the file agent-workflow-setup-guide.md from:
+https://github.com/DataIntegrationMastery/integration-agent-workflow/blob/main/docs/installation/agent-workflow-setup-guide.md
+
+Analyze all components that the Agent Workflow setup creates in a project:
+- Folder structures (/docs/architecture, /docs/plans, /docs/prd, /docs/rules, /docs/tasks, .github)
+- Agent definition files (.github/agents/*.agent.md)
+- Template files (TASK-template.md, SUBTASK-template.md, PRD-template.md, PLAN-template.md, PR-template.md)
+- Rule files (project-context.md, technology-stack.md)
+- Any other files and folders mentioned in the setup guide
+
+Remove all identified Agent Workflow components from this project.
+
+IMPORTANT: Do NOT remove:
+- The project's actual source code
+- User-created PRD, PLAN, or TASK documents (ask first)
+- Other project-specific files
+
+Finally, list all removed files and folders.
+```
+
+## Important
+
+- **Always review** before confirming deletions — especially for `/docs/tasks/` which may contain completed work
+- The prompt fetches the latest setup guide, ensuring it accounts for any new components added in future versions
+- If you want to keep certain documentation (e.g., completed TASKs), answer accordingly when the agent asks
 
