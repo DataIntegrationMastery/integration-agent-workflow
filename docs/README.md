@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.17** / *10th Mar 2026*
+**Version 1.18** / *10th Mar 2026*
 
 
 
@@ -350,15 +350,15 @@ Agent memory comes from:
 
 Designer:
 
-    Act as Integration Designer. Read the current PRD under /docs/prd/PRD-X.md. Ignore planning and build discussions.
+    Act as Integration Designer. Read the current PRD under /docs/prd/PRD-X.md. Ignore previous discussions.
 
 Planner:
 
-    Act as Integration Planner. Read PRD under /docs/prd/PRD-X.md. Ignore previous build discussions.
+    Act as Integration Planner. Read PRD under /docs/prd/PRD-X.md. Ignore previous discussions.
 
 Builder:
 
-    Act as Integration Builder. Implement TASK-02 from /docs/tasks. Ignore planning discussions.
+    Act as Integration Builder. Implement TASK-02 from /docs/tasks. Ignore previous discussions.
 
 ***
 
@@ -507,7 +507,7 @@ Once the agents are installed in your project, you can walk through the full wor
 **Open a new chat** with **Integration Designer Agent**. Choose the latest **Claude Opus** model and send the following prompt:
 
 ```
-You are Integration Designer. Ignore previous planning and builder discussions.
+You are Integration Designer. Ignore previous discussions.
 
 Create a complete PRD for a new integration service.
 
@@ -532,7 +532,7 @@ This will generate a PRD under `/docs/prd/`. **Review and approve** the PRD befo
 **Open a new chat** with **Integration Planner Agent** (do not continue in the Designer chat). Choose the latest **Claude Opus** model and send the following prompt:
 
 ```
-You are Integration Planner. Ignore previous designer and planner discussions.
+You are Integration Planner. Ignore previous discussions.
 
 Read the approved PRD under /docs/prd/ for the Star Wars Character Search service.
 
@@ -564,7 +564,7 @@ Run tests after implementation and report results.
 After TASK-01 is complete and verified, continue with the next TASK:
 
 ```
-You are Integration Builder. Ignore previous planning discussions.
+You are Integration Builder. Ignore previous discussions.
 
 Implement TASK-02 exactly as defined in /docs/tasks/TASK-02/.
 
@@ -579,7 +579,7 @@ Repeat for each remaining TASK until the service is fully implemented.
 If during implementation new requirements or issues arise, **open a new chat** with **Integration Designer Agent** (do not continue in the Builder chat). Choose the latest **Claude Opus** model and send the following prompt:
 
 ```
-You are Integration Designer. Ignore previous planner and builder discussions.
+You are Integration Designer. Ignore previous discussions.
 
 Read the current PRD under /docs/prd/ for the Star Wars Character Search service.
 
@@ -636,7 +636,7 @@ If you need to remove the Agent Workflow setup from your project, use the follow
 Read the file agent-workflow-setup-guide.md from:
 https://github.com/DataIntegrationMastery/integration-agent-workflow/blob/main/docs/installation/agent-workflow-setup-guide.md
 
-If the guide cannot pe found from the web-address, try to find the same file from the project directory.
+If the guide cannot be found from the web-address, try to find the same file from the project directory.
 
 Analyze all components that the Agent Workflow setup creates in a project:
 - Folder structures (/docs/architecture, /docs/plans, /docs/prd, /docs/rules, /docs/tasks, .github)
