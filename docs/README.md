@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.15** / *10th Mar 2026*
+**Version 1.16** / *10th Mar 2026*
 
 
 
@@ -112,7 +112,7 @@ To use this template as a starting point for your own project, add it as a tempo
 ```bash
 git remote add template https://github.com/DataIntegrationMastery/integration-agent-workflow.git
 git fetch template
-git checkout template/main -- .    # copies all template files into your working directory
+git checkout template/main -- . 
 git remote remove template
 ```
 
