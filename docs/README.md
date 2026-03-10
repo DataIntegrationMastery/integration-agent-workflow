@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.12** / *9th Mar 2026*
+**Version 1.14** / *10th Mar 2026*
 
 
 
@@ -16,6 +16,7 @@ Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
    - [Step 1 — Getting this Repository as a Template to Your Project](#step-1--getting-this-repository-as-a-template-to-your-project)
    - [Step 2 — Bootstrap the Environment from the Design Document](#step-2--bootstrap-the-environment-from-the-design-document)
    - [Step 3 — Review the Changes](#step-3--review-the-changes)
+   - [Step 4 — Validate Agent Configuration](#step-4--validate-agent-configuration)
 4. [Using the Agents](#using-the-agents)
    - [Choosing the Language Models for the Agents](#choosing-the-language-models-for-the-agents)
    - [Handling the Context](#handling-the-context)
@@ -125,7 +126,7 @@ After this, make sure:
 
 ## Step 2 — Bootstrap the Environment from the Design Document
 
-Choose the latest Claude Opus model and copy and paste the following prompt into Copilot Chat:
+Choose the latest **Claude Opus** model and copy and paste the following prompt into Copilot Chat:
 
 
 ```
@@ -203,6 +204,84 @@ The setup assistant generates two files that **require your input before agents 
 > **Without accurate project context and technology stack rules, agents will produce generic or incorrect outputs.** This is the single most important manual step in the setup.
 
 
+
+***
+
+## Step 4 — Validate Agent Configuration
+
+After setup and configuration, validate that all agent instruction files are consistent and correct before starting actual work. Use this validation prompt to check for inconsistencies or conflicting guidance across all agent definitions.
+
+**Open Copilot Chat** (do NOT select a specific agent — just use the general Copilot Chat), choose the latest Claude Opus model, and copy and paste the following prompt:
+
+```
+You are an environment validation assistant.
+
+Your task is to audit all agent configuration files in this repository to ensure consistency,
+correctness, and the absence of conflicting or contradictory instructions.
+
+Files to check:
+1. `.github/copilot-instructions.md`
+2. `.github/agents/Integration Designer.agent.md`
+3. `.github/agents/Integration Planner.agent.md`
+4. `.github/agents/Integration Builder.agent.md`
+
+For each file, verify:
+
+**Structure & Completeness**
+- Does it exist?
+- Does it have the required frontmatter (description, tools)?
+- Are all required sections present?
+
+**Role Definitions**
+- Are Designer, Planner, and Builder roles clearly separated?
+- Does each agent have the correct assigned tools?
+  - Designer: 'read', 'edit', 'search', 'fetch'
+  - Planner: 'read', 'edit', 'search'
+  - Builder: 'read', 'edit', 'search', 'execute'
+
+**Rule Consistency**
+- Are workflow rules (PRD → PLAN → TASK) consistently described across all agents?
+- Is the status model (TASK and SUBTASK statuses) consistently defined?
+- Are design principles and implementation guidelines consistent?
+
+**Priority & Constraints**
+- Are data source priorities clearly defined (e.g., /docs/prd before /docs/rules)?
+- Are forbidden actions (e.g., "Builder must not modify PLAN") clearly stated for each role?
+- Are web usage policies consistent with agent capabilities?
+
+**Optional Features**
+- If OPTION 2 (Rule System) is enabled, is it correctly referenced in Designer and/or Planner agents?
+- If OPTION 3 (Delegation) is enabled, does Planner have 'agent' tool and correct delegation instructions?
+- If OPTION 4 (Domain Expert Mode) is enabled, is /docs/[project-name] correctly referenced, and is the project identifier consistent across all agents?
+
+**Inconsistencies to Flag**
+- Contradictory instructions across agents
+- Missing required files or sections
+- Incorrect tool assignments
+- Conflicting priority rules
+- Incorrect file path references
+- Mismatched project identifiers (if OPTION 4 enabled)
+
+**Report Format**
+
+For each issue found, provide:
+1. **Issue:** Clear description of the problem
+2. **Location:** Which file(s) and line(s)
+3. **Current State:** What is currently written
+4. **Expected State:** What should be corrected
+5. **Fix:** Specific text replacement or addition recommended
+
+If no issues are found, report:
+"✓ All agent configuration files are consistent and correct. Ready for use."
+
+After completing the audit, provide a summary:
+- Total issues found
+- By severity (Critical, Warning, Info)
+- By file
+- Recommended next steps
+```
+
+This validation ensures that before you start using agents for actual work, all configuration is consistent and correct. If any issues are found, apply the recommended fixes and validate again.
 
 ***
 
@@ -387,6 +466,34 @@ If you do not want to restart the conversation, explicitly instruct the agent:
 ``` Re-read .github/copilot-instructions.md and apply the updated rules before continuing.```
 
 This often works, but for significant rule changes, starting a new chat is safer and more deterministic.
+
+***
+
+## **Agent Configuration Options**
+
+Beyond the base setup, the Integration Agent Workflow supports several optional configurations to extend agent capabilities for specific project needs:
+
+### **OPTION 1: Initialize Project Context and Technology Stack from Environment**
+Automatically populate `project-context.md` and `technology-stack.md` based on your project's build files and local environment. Useful for fast onboarding in existing projects.
+
+See: [Setup Guide — OPTION 1](installation/agent-workflow-setup-guide.md#option-1-initialize-project-context-and-technology-stack-from-environment)
+
+### **OPTION 2: Enable Integration Architecture Rule System for Agents**
+Add a deterministic, rule-based framework that guides Designer and Planner agents to make structured, traceable architecture decisions through explicit design principles and pattern selection rules.
+
+See: [Setup Guide — OPTION 2](installation/agent-workflow-setup-guide.md#option-2-enable-integration-architecture-rule-system-for-agents)
+
+### **OPTION 3: Agent Delegation – Orchestrating Planner and Builder**
+Enable the Planner agent to delegate TASKs to the Builder agent for end-to-end implementation, testing, and committing, reducing manual coordination.
+
+See: [Setup Guide — OPTION 3](installation/agent-workflow-setup-guide.md#option-3-agent-delegation-orchestrating-planner-and-builder-for-end-to-end-implementation)
+
+### **OPTION 4: Project Domain Expert Mode**
+Transform Designer, Planner, and Builder agents into project domain experts by having them prioritize project-specific documentation from `docs/[project-name]/`. Ensures agents apply domain context to all decisions and consistently update knowledge from project-specific guidance.
+
+See: [Setup Guide — OPTION 4](installation/agent-workflow-setup-guide.md#option-4-project-domain-expert-mode)
+
+Each OPTION is independent and can be combined with others to match your project's needs.
 
 ***
 

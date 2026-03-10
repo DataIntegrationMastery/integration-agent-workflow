@@ -1,6 +1,6 @@
 # **Agent Workflow Setup Guide**
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.15** / *8th Mar 2026*
+**Version 1.17** / *10th Mar 2026*
 
 ## Table of Contents
 
@@ -47,6 +47,12 @@ Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
    - [Why Use Delegation?](#why-use-delegation)
    - [How to Enable](#how-to-enable-1)
    - [Required Agent Configuration Changes](#required-agent-configuration-changes)
+9. [OPTION 4: Project Domain Expert Mode](#option-4-project-domain-expert-mode)
+   - [What It Does](#what-it-does-domain-expert)
+   - [How to Enable](#how-to-enable-domain-expert)
+   - [Required Configuration](#required-configuration-domain-expert)
+   - [Agent Instruction Modifications](#agent-instruction-modifications)
+   - [Important](#important-domain-expert)
 
 
 ## **Introduction**
@@ -1512,6 +1518,254 @@ To enable safe delegation, the three agents must be configured as follows:
   - Running tests
   - Fixing failures
   - Committing changes
+
+***
+
+# **OPTION 4:** Project Domain Expert Mode
+
+Project Domain Expert Mode transforms the **Integration Designer**, **Integration Planner**, and **Integration Builder** agents into specialized experts for a specific project domain. When enabled, agents prioritize project-specific documentation stored in a dedicated folder and apply domain context to all architectural decisions, planning, and implementation work.
+
+This is useful when you have project-specific guidelines, conventions, architectural patterns, development playbooks, or other domain knowledge that should be referenced before and alongside the standard rules system.
+
+## What It Does
+
+When Domain Expert Mode is enabled:
+
+1. **Agents prioritize project documentation** from `docs/[project-name]/` over generic rules and templates
+2. **All project-specific guidelines** (architecture patterns, technical decisions, development practices, naming conventions, etc.) are loaded and applied first
+3. **Agents update their knowledge** from this folder consistently throughout development
+4. **Scope conflicts are resolved predictably** — project-specific guidance takes precedence over `docs/rules/` guidance in ambiguous situations
+5. **The project name is parameterized** in setup prompts to ensure consistency between agent configurations and documentation location
+
+## How to Enable
+
+### Step 1 — Organize Project Documentation
+
+Create a folder under `/docs/[project-name]/` containing all project-specific guidance and documentation. The folder name must be **exactly identical** to the project name identifier you will use in agent prompts.
+
+For example, if your project is called **imdb**:
+
+```
+/docs/imdb/
+    development-playbook.md      ← project development practices, conventions and design decisions
+    environment.md               ← technical environment architecture 
+    concept-models.md            ← projects models
+    ... (any other project-specific docs)
+```
+
+**Important:** All project-specific documentation should be in this single folder (and its subfolders). This becomes the single source of truth for domain expertise.
+
+### Step 2 — Identify the Project Name
+
+Choose a **project identifier** that will be used consistently:
+- In the `docs/[project-name]/` folder name
+- In agent prompts and system instructions
+- In the setup and update prompts
+
+For the imdb example, the project identifier is: **imdb**
+
+### Step 3 — Add Domain Expert Section to Agent Instruction Files
+
+For each agent (Integration Designer, Integration Planner, Integration Builder), add a new section to its `.agent.md` file that instructs it to load and prioritize project-specific documentation.
+
+#### Addition to `.github/agents/Integration Designer.agent.md`:
+
+Add this section after the "Web Usage Rules" section and before the closing backticks:
+
+```markdown
+## Project Domain Expertise – [project-name]
+
+This project has dedicated domain expertise documentation under `/docs/[project-name]/`.
+
+**Priority loading** (in order):
+1. Project-specific documentation under `/docs/[project-name]/`
+2. Rules system under `/docs/rules/integration-architecture-rule-system/` (if enabled)
+3. Standard integration patterns and PRD templates
+
+Before creating or updating any PRD:
+1. Read all files in `/docs/[project-name]/` (including subfolders)
+2. Extract project-specific patterns, conventions, constraints, and architectural decisions
+3. Apply these patterns consistently in the PRD
+4. When PRD content could conflict with project guidance, prioritize project guidance
+5. Mark any uncertainties as OPEN QUESTIONS for human review
+
+Update your understanding of project patterns whenever you access domain documentation. Keep project-specific context active throughout all architecture discussions.
+```
+
+#### Addition to `.github/agents/Integration Planner.agent.md`:
+
+Add this section after the "Project Context & Technology Stack Rules" section and before the closing backticks:
+
+```markdown
+## Project Domain Expertise – [project-name]
+
+This project has dedicated domain expertise documentation under `/docs/[project-name]/`.
+
+**Priority loading** (in order):
+1. Project-specific documentation under `/docs/[project-name]/`
+2. Rules system under `/docs/rules/integration-architecture-rule-system/` (if enabled)
+3. Standard planning templates and TASK models
+
+Before creating any PLAN or TASK:
+1. Read all files in `/docs/[project-name]/` (including subfolders)
+2. Extract project-specific patterns, conventions, architectural decisions, and naming conventions
+3. Apply these patterns to TASK definitions and sequencing
+4. Orient SUBTASK breakdowns according to project practices
+5. Mark any uncertainties as OPEN QUESTIONS for human review
+
+Maintain project context throughout planning. Reference project patterns explicitly in PLAN and TASK documents.
+```
+
+#### Addition to `.github/agents/Integration Builder.agent.md`:
+
+Add this section after the "Project Context & Technology Stack Rules" section and before the closing backticks:
+
+```markdown
+## Project Domain Expertise – [project-name]
+
+This project has dedicated domain expertise documentation under `/docs/[project-name]/`.
+
+**Priority loading** (in order):
+1. Project-specific documentation under `/docs/[project-name]/`
+2. Technology Stack Rules under `/docs/rules/technology-stack.md`
+3. Standard implementation templates and patterns
+
+Before implementing any SUBTASK:
+1. Read all files in `/docs/[project-name]/` (including subfolders)
+2. Extract project-specific code patterns, naming conventions, architectural decisions, and implementation practices
+3. Apply these patterns to code generation, test creation, and error handling
+4. Follow project code style and component organization
+5. Use project-specific terminology and abstractions
+
+Maintain project context throughout implementation. Reference project patterns explicitly in code comments and commit messages.
+```
+
+### Step 4 — Replace Placeholder `[project-name]`
+
+In each agent `.agent.md` file, replace the placeholder **`[project-name]`** with your actual **project identifier**.
+
+Example for project **imdb**:
+
+**Before:**
+```
+## Project Domain Expertise – [project-name]
+This project has dedicated domain expertise documentation under `/docs/[project-name]/`.
+```
+
+**After:**
+```
+## Project Domain Expertise – imdb
+This project has dedicated domain expertise documentation under `/docs/imdb/`.
+```
+
+Make this replacement consistently throughout all three agent files.
+
+### Step 5 — Verify Configuration
+
+1. Confirm that `/docs/[project-name]/` folder exists and contains your project documentation
+2. Confirm that all three agent files have been updated with the correct project identifier
+3. Close any open chat sessions (especially with the agents)
+4. Start a **new chat** with one of the agents and verify it references the project-specific documentation
+
+Test prompt for verification:
+
+```
+Confirm that you are now operating in Project Domain Expert Mode for [project-name].
+List the project-specific documentation files you loaded from `/docs/[project-name]/`.
+```
+
+### Step 6 — Rename Agents with Project Identifier
+
+To make the domain expertise role visually distinct in Copilot Chat, rename the three agent files to include the project identifier. This transforms generic agents into project-specific domain experts.
+
+**Rename the agent files:**
+
+```
+BEFORE (generic):
+.github/agents/Integration Designer.agent.md
+.github/agents/Integration Planner.agent.md
+.github/agents/Integration Builder.agent.md
+
+AFTER (domain experts for project "imdb"):
+.github/agents/[project-name] Integration Designer.agent.md
+.github/agents/[project-name] Integration Planner.agent.md
+.github/agents/[project-name] Integration Builder.agent.md
+
+EXAMPLE (for project "imdb"):
+.github/agents/Imdb Integration Designer.agent.md
+.github/agents/Imdb Integration Planner.agent.md
+.github/agents/Imdb Integration Builder.agent.md
+```
+
+**Benefits of renaming:**
+- Agents appear as "Imdb Integration Designer" in Copilot Chat (not generic "Integration Designer")
+- Visually distinct from any generic Integration agents you may use elsewhere
+- Reinforces that these agents understand project-specific patterns and context
+- Makes it clear in chat history which project's agents are being used
+
+**After renaming:**
+1. Commit the renamed files to version control
+2. Close all open chat sessions
+3. Start a **new chat** and verify the agents appear with the project-specific names
+4. Confirm that agents still load project documentation correctly
+
+## Required Configuration
+
+### Folder Structure
+
+```
+/docs
+    /[project-name]              ← replace with actual project identifier
+        development-playbook.md
+        technical-description.md
+        development-process.md
+        ... (any other project-specific docs)
+    /rules
+        project-context.md
+        technology-stack.md
+        /integration-architecture-rule-system/ (if OPTION 2 enabled)
+    /prd
+    /plans
+    /tasks
+```
+
+### Naming Convention
+
+The **project identifier** must be **exactly identical** in three places:
+1. Folder name: `/docs/[project-name]/`
+2. Agent instruction text: `## Project Domain Expertise – [project-name]`
+3. Agent setup prompts: references to `/docs/[project-name]/`
+
+Keep this naming consistent to ensure agents reliably find and load the correct documentation.
+
+## Agent Instruction Modifications
+
+When enabling Domain Expert Mode, all three agents require modifications to their `.agent.md` files:
+
+### Designer Agent
+- Loads project documentation first when creating PRDs
+- Validates PRD decisions against project patterns
+- Marks deviations from project guidance as explicit assumptions
+
+### Planner Agent
+- Incorporates project-specific patterns in PLAN and TASK structures
+- Sequences TASKs according to project dependencies and conventions
+- Ensures naming and organization match project standards
+
+### Builder Agent
+- Implements code according to project-specific patterns and conventions
+- Applies project naming and organization standards
+- References project documentation in comments and commit messages
+
+## Important
+
+- **Project documentation must exist before enabling agents** — create `/docs/[project-name]/` and populate it before adding the Domain Expertise section to agent files
+- **Project identifier must match exactly** — inconsistent naming will prevent agents from locating documentation
+- **Start a new chat after configuration** — agents will not pick up changes without a fresh chat session
+- **Project documentation takes precedence** — in conflicts between project guidance and standard rules, project guidance wins (by design)
+- **Maintain documentation currency** — update project documentation whenever architectural patterns or conventions change, and agents will apply updated patterns on next access
+- **This option can be combined with OPTION 2** — both the rule system and domain expertise can be enabled simultaneously (rule system loads after project docs in priority order)
+
 
 
 
