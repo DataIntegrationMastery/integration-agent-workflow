@@ -1,6 +1,6 @@
 # **Agent Workflow Setup Guide**
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.18** / *10th Mar 2026*
+**Version 1.19** / *10th Mar 2026*
 
 ## Table of Contents
 
@@ -1212,7 +1212,7 @@ integration landscape:
 ```
 Act as Integration Designer.
 Read the existing codebase under /src.
-Read the existing README.md (or equivalent) from the root.
+Read the also existing README.md (or equivalent) from the root but remember the thruth is in the sourse code (/src)
 Produce a baseline PRD under /docs/prd/PRD-baseline.md
 that documents the current integration flows, data contracts,
 and non-functional characteristics as they exist today.

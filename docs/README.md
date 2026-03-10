@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.16** / *10th Mar 2026*
+**Version 1.17** / *10th Mar 2026*
 
 
 
@@ -207,7 +207,7 @@ The setup assistant generates two files that **require your input before agents 
 
 ***
 
-## Step 4 — Validate Agent Configuration
+## Step 4 — Validate Agent Configuration using the chat 
 
 After setup and configuration, validate that all agent instruction files are consistent and correct before starting actual work. Use this validation prompt to check for inconsistencies or conflicting guidance across all agent definitions.
 
