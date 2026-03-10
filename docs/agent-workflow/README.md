@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.21** / *10th Mar 2026*
+**Version 1.22** / *10th Mar 2026*
 
 
 

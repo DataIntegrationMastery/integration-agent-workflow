@@ -1,6 +1,6 @@
 # **Agent Workflow Setup Guide**
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.21** / *10th Mar 2026*
+**Version 1.22** / *10th Mar 2026*
 
 ## Table of Contents
 
@@ -107,7 +107,7 @@ In integration development this is essential, because integrations are **contrac
 | **PRD** | **P**roduct **R**equirements **D**ocument – defines what needs to be built. |
 | **PLAN** | Execution plan derived from PRD – breaks work into **VERTICAL SLICE**s and **TASK**s. |
 | **VERTICAL SLICE** | A thin but end-to-end implementation of one complete integration flow — from source system to target system — including routing, transformation, error handling, and monitoring. |
-| **TASK** | One end-to-end **VERTICAL SLICE** that delivers a usable integration capability (e.g., an API endpoint, a message consumer, a data sync flow). Each TASK has its own folder under `/docs/tasks/TASK-XX/`. |
+| **TASK** | One end-to-end **VERTICAL SLICE** that delivers a usable integration capability (e.g., an API endpoint, a message consumer, a data sync flow). Each TASK has its own folder under `/docs/agent-workflow/tasks/TASK-XX/`. |
 | **SUBTASK** | A technical implementation step within a TASK. Builder generates 5–12 SUBTASKs per TASK. Each SUBTASK results in one commit. |
 
 ### **Status Model**
@@ -203,6 +203,9 @@ This is critical.
 
 ## **Purpose of the Folders**
 
+**/docs/agent-workflow/architecture**
+Architectural Decision Records.
+
 **/docs/agent-workflow/prd**  
 Product Requirements Documents (one per feature).
 
@@ -212,9 +215,6 @@ Plans generated from PRDs.
 **/docs/agent-workflow/tasks**  
 TASK and SUBTASK definitions. Each TASK has its own folder: `/docs/agent-workflow/tasks/TASK-XX/`.  
 Templates: `TASK-template.md` and `SUBTASK-template.md` at root level.
-
-**/docs/agent-workflow/architecture**  
-Architectural Decision Records.
 
 **/docs/agent-workflow/rules**  
 Project-level control files: `project-context.md` and `technology-stack.md`.  
@@ -273,7 +273,7 @@ Example content:
 
     When acting as Integration Designer:
 
-    1. Help define and refine PRD under /docs/prd.
+    1. Help define and refine PRD under /docs/agent-workflow/prd.
     2. Clarify data flows, contracts, APIs, messaging patterns.
     3. Define non-functional requirements.
     4. Evaluate integration patterns (sync vs async, routing, orchestration, etc.).
@@ -293,11 +293,11 @@ Example content:
 
     When acting as Integration Planner:
 
-    1. Read relevant PRD under /docs/prd.
+    1. Read relevant PRD under /docs/agent-workflow/prd.
     2. Analyze repository structure before proposing changes.
     3. Produce:
-    - PLAN document under /docs/plans
-    - TASK definitions under /docs/tasks
+    - PLAN document under /docs/agent-workflow/plans
+    - TASK definitions under /docs/agent-workflow/tasks
     4. Mark:
     - ASSUMPTIONS
     - OPEN QUESTIONS
@@ -370,7 +370,7 @@ All three agents reference this file for project-level context.
 
 Create:
 
-    /docs/rules/project-context.md
+    /docs/agent-workflow/rules/project-context.md
 
 Content should include:
 - Project name
@@ -391,7 +391,7 @@ Referenced by Planner (for TASK specifications) and Builder (for implementation)
 
 Create:
 
-    /docs/rules/technology-stack.md
+    /docs/agent-workflow/rules/technology-stack.md
 
 Content should include:
 - Mandatory integration framework and usage rules
@@ -415,7 +415,7 @@ Defines:
 
 Create:
 
-    /docs/prd/PRD-template.md
+    /docs/agent-workflow/prd/PRD-template.md
 
 Example content:
 ```
@@ -528,7 +528,7 @@ Purpose:
 
 Create:
 
-    /docs/plans/PLAN-template.md
+    /docs/agent-workflow/plans/PLAN-template.md
 
 Example content:
 ```
@@ -609,15 +609,15 @@ Purpose:
 *   Describe scope, flow, acceptance criteria
 *   Reference SUBTASKs for implementation details
 
-Each TASK gets its own folder: `/docs/tasks/TASK-XX/`
+Each TASK gets its own folder: `/docs/agent-workflow/tasks/TASK-XX/`
 
 Reusable template:
 
-    /docs/tasks/TASK-template.md
+    /docs/agent-workflow/tasks/TASK-template.md
 
 Create per TASK:
 
-    /docs/tasks/TASK-XX/TASK-XX.md
+    /docs/agent-workflow/tasks/TASK-XX/TASK-XX.md
 
 Example content:
 ```
@@ -664,11 +664,11 @@ Purpose:
 
 Reusable template:
 
-    /docs/tasks/SUBTASK-template.md
+    /docs/agent-workflow/tasks/SUBTASK-template.md
 
 Create per SUBTASK:
 
-    /docs/tasks/TASK-XX/SUBTASK-XX.md
+    /docs/agent-workflow/tasks/TASK-XX/SUBTASK-XX.md
 
 Example content:
 ```
@@ -697,7 +697,7 @@ Example content:
 Each TASK is organized as a folder containing the TASK definition and its SUBTASKs:
 
 ```
-    /docs/tasks/
+    /docs/agent-workflow/tasks/
         TASK-01/
             TASK-01.md
             SUBTASK-01.md
@@ -809,7 +809,7 @@ Roles:
 
 ## Your Responsibilities
 
-1. Help define and refine PRD documents under `/docs/prd`.
+1. Help define and refine PRD documents under `/docs/agent-workflow/prd`.
 2. Clarify data flows, contracts, APIs, and messaging patterns.
 3. Define non-functional requirements (throughput, latency, retry, idempotency, observability, security).
 4. Evaluate integration patterns (sync vs async, routing, orchestration, event-driven, etc.).
@@ -848,7 +848,7 @@ Use this agent when:
 
 ## What You Produce
 
-### PRD documents (`/docs/prd`)
+### PRD documents (`/docs/agent-workflow/prd`)
 Each PRD must include:
 1. **Objective** – problem being solved, expected outcome
 2. **Scope** – in scope / out of scope
@@ -909,7 +909,7 @@ You have access to the `fetch` tool for web searches. Use it **only** under thes
 ## Project Context
 
 Read and apply the project context defined in:
-- `/docs/rules/project-context.md` — project name, runtime, framework, deployment model
+- `/docs/agent-workflow/rules/project-context.md` — project name, runtime, framework, deployment model
 
 These definitions are the source of truth for all architecture decisions.
 Do NOT override them with assumptions or web-sourced information.
@@ -957,10 +957,10 @@ Do not redefine architecture. Your role is structured execution planning.
 
 ## Your Responsibilities
 
-1. Analyze PRD documents under `/docs/prd`.
+1. Analyze PRD documents under `/docs/agent-workflow/prd`.
 2. Analyze repository structure before proposing changes.
-3. Create or update PLAN documents under `/docs/plans`.
-4. Break work into TASKs under `/docs/tasks`.
+3. Create or update PLAN documents under `/docs/agent-workflow/plans`.
+4. Break work into TASKs under `/docs/agent-workflow/tasks`.
 5. Propose execution order and justify it.
 
 
@@ -987,7 +987,7 @@ Do not redefine architecture. Your role is structured execution planning.
 
 - Each TASK must deliver one **end-to-end vertical capability**.
 - Do NOT create horizontal TASKs (e.g., "set up logging" or "add error handling" across all flows).
-- Create a folder per TASK: `/docs/tasks/TASK-XX/`
+- Create a folder per TASK: `/docs/agent-workflow/tasks/TASK-XX/`
 - Create `TASK-XX.md` inside each folder.
 - Initialize all TASK statuses as `TO-DO`.
 - Do NOT create SUBTASK files — the Builder generates those.
@@ -995,7 +995,7 @@ Do not redefine architecture. Your role is structured execution planning.
 
 ## What You Produce
 
-### PLAN document (`/docs/plans`)
+### PLAN document (`/docs/agent-workflow/plans`)
 Each plan must include:
 1. **Architecture Overview** – entry point, transport mechanism, processing model, error handling strategy
 2. **Implementation Phases** – macro steps (architecture & wiring, happy path, error handling & resilience, testing, deployment & observability)
@@ -1005,7 +1005,7 @@ Each plan must include:
 6. **Risks & Mitigation**
 7. **Human Approval Required** – checkboxes for architecture, non-functionals, TASK order
 
-### TASK definitions (`/docs/tasks/TASK-XX/`)
+### TASK definitions (`/docs/agent-workflow/tasks/TASK-XX/`)
 Each TASK must include:
 1. **Status** – TO-DO (initial)
 2. **Description** – what end-to-end capability is delivered
@@ -1036,8 +1036,8 @@ Ensure TASK definitions cover:
 ## Project Context & Technology Stack
 
 Read and apply the following project-level definitions:
-- `/docs/rules/project-context.md` — project name, runtime, framework, deployment model
-- `/docs/rules/technology-stack.md` — integration framework conventions and terminology
+- `/docs/agent-workflow/rules/project-context.md` — project name, runtime, framework, deployment model
+- `/docs/agent-workflow/rules/technology-stack.md` — integration framework conventions and terminology
 
 These definitions are the source of truth for planning.
 Do NOT override them with assumptions.
@@ -1088,7 +1088,7 @@ Never invent new architectural patterns independently.
 ## Your Responsibilities
 
 1. Implement exactly **ONE** approved TASK at a time.
-2. Follow the TASK specification strictly (under `/docs/tasks/TASK-XX/`).
+2. Follow the TASK specification strictly (under `/docs/agent-workflow/tasks/TASK-XX/`).
 3. For each TASK, add:
    - Implementation code
    - Tests
@@ -1115,7 +1115,7 @@ Never invent new architectural patterns independently.
 
 ## TASK Implementation Workflow
 
-1. **Read** the TASK definition from `/docs/tasks/TASK-XX/TASK-XX.md`.
+1. **Read** the TASK definition from `/docs/agent-workflow/tasks/TASK-XX/TASK-XX.md`.
 2. **Set TASK status** to `IN-PROGRESS`.
 3. **Check for SUBTASK files** in the TASK folder.
    - If **no SUBTASKs exist**: generate 5–12 SUBTASK files (`SUBTASK-01.md` through `SUBTASK-NN.md`) and **STOP for human approval**.
@@ -1177,8 +1177,8 @@ After completing a TASK, provide:
 ## Project Context & Technology Stack Rules
 
 Read and apply the following project-level definitions:
-- `/docs/rules/project-context.md` — project name, runtime, framework, deployment model
-- `/docs/rules/technology-stack.md` — mandatory technology stack rules and constraints
+- `/docs/agent-workflow/rules/project-context.md` — project name, runtime, framework, deployment model
+- `/docs/agent-workflow/rules/technology-stack.md` — mandatory technology stack rules and constraints
 
 These definitions are the source of truth for implementation.
 Do NOT use libraries, patterns, or frameworks that are not defined in these files.
@@ -1196,7 +1196,7 @@ understand what already exists before they can plan or build effectively.
 Before creating any agent files, map what is already in place:
 
 - Does a `/docs` folder exist? If not, create it with the full folder structure
-  (`/prd`, `/plans`, `/tasks`, `/architecture`).
+  (`/prd`, `/plans`, `/tasks`, `/arc`).
 - Does `.github/copilot-instructions.md` exist? If yes, review and extend it —
   do not replace it blindly.
 - Are there existing routes, endpoints, or integration flows? List them. These
@@ -1213,7 +1213,7 @@ integration landscape:
 Act as Integration Designer.
 Read the existing codebase under /src.
 Read the also existing README.md (or equivalent) from the root but remember the thruth is in the sourse code (/src)
-Produce a baseline PRD under /docs/prd/PRD-baseline.md
+Produce a baseline PRD under /docs/agent-workflow/prd/PRD-baseline.md
 that documents the current integration flows, data contracts,
 and non-functional characteristics as they exist today.
 Mark unclear areas as OPEN QUESTIONS.
@@ -1231,18 +1231,18 @@ the `/docs` layer is additive.
 Minimum additions to an existing project:
 
 ```
-/docs/agent-workflow
-  /prd
-    PRD-baseline.md       ← documents existing system
-  /plans                  ← empty, ready for first plan
-  /tasks                  ← empty, ready for first tasks
-  /architecture            ← empty, for future decisions
 .github
   copilot-instructions.md ← extend if already exists
   /agents
     Integration Designer.agent.md
     Integration Planner.agent.md
     Integration Builder.agent.md
+/docs/agent-workflow
+  /prd
+    PRD-baseline.md       ← documents existing system
+  /plans                  ← empty, ready for first plan
+  /tasks                  ← empty, ready for first tasks
+  /architecture            ← empty, for future decisions
 ```
 
 ### Step 4 — Define the first TASK as a new capability, not a refactor
@@ -1287,8 +1287,8 @@ Read the project build file (pom.xml or build.gradle), the source code structure
 under /src, and check the local Java and build tool versions from the terminal.
 
 Based on what you find, fill in the following control files with actual values:
-- /docs/rules/project-context.md
-- /docs/rules/technology-stack.md
+- /docs/agent-workflow/rules/project-context.md
+- /docs/agent-workflow/rules/technology-stack.md
 
 Use the existing section headings in each file. Replace placeholder comments
 with concrete values. If a value cannot be determined from the project files
@@ -1391,7 +1391,7 @@ Follow the installation guide in:
 
 The guide describes:
 
-1. **Prerequisites** — required file structure under `/docs/rules/`
+1. **Prerequisites** — required file structure under `/docs/agent-workflow/rules/`
 2. **Target agent** — which agent to configure (Designer, and optionally Planner)
 3. **Section to add** — the exact Markdown block to insert into the agent's `.agent.md` file
 4. **Loading strategy** — how the agent should load rule files on demand
@@ -1407,7 +1407,7 @@ The guide describes:
 
 ## Important
 
-- The rule system files must exist under `/docs/rules/integration-architecture-rule-system/` in your repository
+- The rule system files must exist under `/docs/agent-workflow/rules/integration-architecture-rule-system/` in your repository
 - Do NOT copy the rule content into the agent file — the agent loads rule files on demand from the repository
 - After modifying agent `.agent.md` files, start a **new chat** to ensure the agent picks up the changes
 
@@ -1459,10 +1459,10 @@ Add the following section to `.github/agents/Integration Planner.agent.md`, befo
 
 When delegation is enabled:
 
-1. Create and document all TASKs under `/docs/tasks/` as normal.
+1. Create and document all TASKs under `/docs/agent-workflow/tasks/` as normal.
 2. Present the full TASK list to the human for approval before delegating.
 3. After approval, delegate each TASK to **Integration Builder** one at a time:
-   - Reference the TASK file: `/docs/tasks/TASK-XX/TASK-XX.md`
+   - Reference the TASK file: `/docs/agent-workflow/tasks/TASK-XX/TASK-XX.md`
    - Instruct Builder to implement exactly one TASK
    - Wait for Builder to complete and report before delegating the next TASK
 4. After each TASK, verify:
@@ -1580,7 +1580,7 @@ This project has dedicated domain expertise documentation under `/docs/[project-
 
 **Priority loading** (in order):
 1. Project-specific documentation under `/docs/[project-name]/`
-2. Rules system under `/docs/rules/integration-architecture-rule-system/` (if enabled)
+2. Rules system under `/docs/agent-workflow/rules/integration-architecture-rule-system/` (if enabled)
 3. Standard integration patterns and PRD templates
 
 Before creating or updating any PRD:
@@ -1604,7 +1604,7 @@ This project has dedicated domain expertise documentation under `/docs/[project-
 
 **Priority loading** (in order):
 1. Project-specific documentation under `/docs/[project-name]/`
-2. Rules system under `/docs/rules/integration-architecture-rule-system/` (if enabled)
+2. Rules system under `/docs/agent-workflow/rules/integration-architecture-rule-system/` (if enabled)
 3. Standard planning templates and TASK models
 
 Before creating any PLAN or TASK:
@@ -1628,7 +1628,7 @@ This project has dedicated domain expertise documentation under `/docs/[project-
 
 **Priority loading** (in order):
 1. Project-specific documentation under `/docs/[project-name]/`
-2. Technology Stack Rules under `/docs/rules/technology-stack.md`
+2. Technology Stack Rules under `/docs/agent-workflow/rules/technology-stack.md`
 3. Standard implementation templates and patterns
 
 Before implementing any SUBTASK:

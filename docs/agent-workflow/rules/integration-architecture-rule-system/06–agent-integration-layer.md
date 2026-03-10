@@ -26,10 +26,10 @@ The agent MUST load and use handbook files in this order:
 1. `00-scope.md`
 2. `01-design-principles.md`
 3. `02-decision-model.md`
-4. `03-pattern-selection-rules.md`
-5. `04-non-functional-architecture.md`
-6. `05-validation-checklist.md`
-7. `06-agent-integration.md`
+4. `03–pattern-selection-rules.md`
+5. `04–non-functional-architecture-rules.md`
+6. `05–validation-checklist.md`
+7. `06–agent-integration-layer.md`
 
 If any file is missing, the agent MUST stop and return:
 
@@ -75,12 +75,12 @@ For every integration design request, the agent MUST execute the steps below in 
 
 ### Step 6 — Non-Functional Enforcement
 
-- Apply `04-non-functional-architecture.md` rules (`NFRxx`).
+- Apply `04–non-functional-architecture-rules.md` rules (`NFRxx`).
 - Any E0 NFR rule MUST be satisfied.
 
 ### Step 7 — Validation Checklist Execution
 
-- Run the full checklist in `05-validation-checklist.md` (V01–V12).
+- Run the full checklist in `05–validation-checklist.md` (V01–V12).
 - Apply Final Validation Rule (Section 05.7).
 - If validation fails, design MUST be revised and revalidated before returning final status.
 
