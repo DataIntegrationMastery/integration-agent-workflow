@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.14** / *10th Mar 2026*
+**Version 1.15** / *10th Mar 2026*
 
 
 
@@ -198,7 +198,7 @@ The setup assistant generates two files that **require your input before agents 
 **These files contain placeholder values.** You must:
 
 1. Open `docs/rules/project-context.md` and replace all `[...]` placeholders with your actual project details
-2. Open `docs/rules/technology-stack.md` and define your actual technology rules and constraints
+2. Open `docs/rules/technology-stack.md` and define your actual technology rules and constrai[text](<../../../../../Library/Mobile Documents/.Trash/jare>)nts
 3. Verify that the agent `.agent.md` files reference these files correctly
 
 > **Without accurate project context and technology stack rules, agents will produce generic or incorrect outputs.** This is the single most important manual step in the setup.
@@ -635,6 +635,8 @@ If you need to remove the Agent Workflow setup from your project, use the follow
 ```
 Read the file agent-workflow-setup-guide.md from:
 https://github.com/DataIntegrationMastery/integration-agent-workflow/blob/main/docs/installation/agent-workflow-setup-guide.md
+
+If the guide cannot pe found from the web-address, try to find the same file from the project directory.
 
 Analyze all components that the Agent Workflow setup creates in a project:
 - Folder structures (/docs/architecture, /docs/plans, /docs/prd, /docs/rules, /docs/tasks, .github)
