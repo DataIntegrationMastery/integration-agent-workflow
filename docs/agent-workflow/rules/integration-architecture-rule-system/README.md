@@ -1,5 +1,5 @@
 # Integration Architecture Rule System
-**VERSION 1.3** / *21th Feb 2026*
+**VERSION 2.0** / *12th Mar 2026*
 
 ---
 **Integration Architecture Rule Engine Specification for Deterministic AI-Based Design**
@@ -141,39 +141,25 @@ Add the following section to the agent's `.agent.md` file (recommended placement
 ```markdown
 ## Integration Architecture Rule System
 
-This repository includes the **Integration Architecture Rule System** under `/docs/agent-workflow/rules/`.
-It is your **normative authority** for integration architecture decisions.
+The **Integration Architecture Rule System** under `/docs/agent-workflow/rules/integration-architecture-rule-system/` is your **normative authority** for integration architecture decisions.
 
-### Rule System Files (load order)
+### Rule Files
 
-1. `/docs/agent-workflow/rules/integration-architecture-rule-system/00-scope.md` — scope definition
-2. `/docs/agent-workflow/rules/integration-architecture-rule-system/01-design-principles.md` — design principles (P01–P25)
-3. `/docs/agent-workflow/rules/integration-architecture-rule-system/02-decision-model.md` — decision rules (D01–D14)
-4. `/docs/agent-workflow/rules/integration-architecture-rule-system/03–pattern-selection-rules.md` — pattern selection (PR01–PR15)
-5. `/docs/agent-workflow/rules/integration-architecture-rule-system/04–non-functional-architecture-rules.md` — NFR rules (NFR01–NFR12)
-6. `/docs/agent-workflow/rules/integration-architecture-rule-system/05–validation-checklist.md` — validation checklist (V01–V12)
-7. `/docs/agent-workflow/rules/integration-architecture-rule-system/06–agent-integration-layer.md` — agent execution model
+| # | File | Contains |
+|---|------|----------|
+| 1 | `00-scope.md` | Scope definition |
+| 2 | `01-design-principles.md` | Design principles (P01–P25) |
+| 3 | `02-decision-model.md` | Decision rules (D01–D14) |
+| 4 | `03–pattern-selection-rules.md` | Pattern selection (PR01–PR15) |
+| 5 | `04–non-functional-architecture-rules.md` | NFR rules (NFR01–NFR12) |
+| 6 | `05–validation-checklist.md` | Validation checklist (V01–V12) |
+| 7 | `06–agent-integration-layer.md` | **Agent execution model — read this for loading order, citation rules, and output structure** |
 
-### How to Use the Rule System
+### Usage
 
-- **When making architecture decisions:** Read relevant rule files and apply principles (`Pxx`),
-  decision rules (`Dxx`), and pattern selection rules (`PRxx`) deterministically.
-- **When defining NFRs in PRD:** Validate against `NFR01–NFR12`.
-- **When finalizing a PRD:** Run the validation checklist (`V01–V12`) and include scores.
-- **Citation requirement:** Every architecture decision in a PRD MUST cite applicable rule
-  identifiers (e.g., `Cites: P01, P04, D01, NFR02`).
-- **Human review triggers:** If any validation category scores 5, or rule conflicts cannot be
-  resolved, return `Status: Requires Human Review`.
-
-### Loading Strategy
-
-Do NOT load all rule files at once. Read them on demand:
-- Start with `00-scope.md` to verify the request is in scope.
-- Load `01-design-principles.md` and `02-decision-model.md` for architecture decisions.
-- Load `03–pattern-selection-rules.md` when evaluating integration patterns.
-- Load `04–non-functional-architecture-rules.md` when defining or validating NFRs.
-- Load `05–validation-checklist.md` when performing final PRD validation.
-- Refer to `06–agent-integration-layer.md` for output structure and citation rules.
+- Load files **on demand**, not all at once. Start with `00-scope.md`.
+- Follow the deterministic execution model defined in `06–agent-integration-layer.md`.
+- Cite applicable rule identifiers in every architecture decision (e.g., `Cites: P01, D01, NFR02`).
 ```
 
 ### 7.5 Behavioral Impact

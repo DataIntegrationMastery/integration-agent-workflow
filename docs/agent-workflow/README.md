@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.223** / *12th Mar 2026*
+**Version 2.0** / *12th Mar 2026*
 
 ## Table of Contents
 
@@ -100,7 +100,7 @@ https://github.com/features/copilot/pricing
 
 # Installing Integration Development Agents to Your Project
 
-The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[installation/agent-workflow-setup-guide.md](installation/agent-workflow/installation/agent-workflow-setup-guide.md)**
+The goal is to let **GitHub Copilot Chat** update your current repository so that it implements the full Integration Agent environment described in instruction: **[installation/agent-workflow-setup-guide.md](installation/agent-workflow-setup-guide.md)**
 
 ## Step 1 — Getting this Repository as a Template to Your Project
 
@@ -534,7 +534,7 @@ Read the approved PRD under /docs/agent-workflow/prd/ for the Star Wars Characte
 Create a complete execution plan with 3–6 vertical TASKs.
 Each TASK must be end-to-end testable and production-ready.
 
-Generate TASK documents under /docs/tasks/.
+Generate TASK documents under /docs/agent-workflow/tasks/.
 ```
 
 **Review and approve** the generated plan and TASK definitions before continuing.
@@ -561,7 +561,7 @@ After TASK-01 is complete and verified, continue with the next TASK:
 ```
 You are Integration Builder. Ignore previous discussions.
 
-Implement TASK-02 exactly as defined in /docs/tasks/TASK-02/.
+Implement TASK-02 exactly as defined in /docs/agent-workflow/tasks/TASK-02/.
 
 Follow all rules from copilot-instructions.md.
 Run tests after implementation and report results.
@@ -629,7 +629,7 @@ If you need to remove the Agent Workflow setup from your project, use the follow
 
 ```
 Read the file agent-workflow-setup-guide.md from:
-https://github.com/DataIntegrationMastery/integration-agent-workflow/blob/main/docs/installation/agent-workflow-setup-guide.md
+https://github.com/DataIntegrationMastery/integration-agent-workflow/blob/main/docs/agent-workflow/installation/agent-workflow-setup-guide.md
 
 If the guide cannot be found from the web-address, try to find the same file from the project directory.
 
