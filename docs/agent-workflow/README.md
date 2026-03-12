@@ -1,9 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 1.22** / *10th Mar 2026*
-
-
-
+**Version 1.223** / *12th Mar 2026*
 
 ## Table of Contents
 
@@ -243,7 +240,7 @@ For each file, verify:
 - Are design principles and implementation guidelines consistent?
 
 **Priority & Constraints**
-- Are data source priorities clearly defined (e.g., /docs/prd before /docs/rules)?
+- Are data source priorities clearly defined (e.g., /docs/agent-workflow/prd before /docs/agent-workflow/rules)?
 - Are forbidden actions (e.g., "Builder must not modify PLAN") clearly stated for each role?
 - Are web usage policies consistent with agent capabilities?
 
@@ -348,15 +345,15 @@ Agent memory comes from:
 
 Designer:
 
-    Act as Integration Designer. Read the current PRD under /docs/prd/PRD-X.md. Ignore previous discussions.
+    Act as Integration Designer. Read the current PRD under /docs/agent-workflow/prd/PRD-X.md. Ignore previous discussions.
 
 Planner:
 
-    Act as Integration Planner. Read PRD under /docs/prd/PRD-X.md. Ignore previous discussions.
+    Act as Integration Planner. Read PRD under /docs/agent-workflow/prd/PRD-X.md. Ignore previous discussions.
 
 Builder:
 
-    Act as Integration Builder. Implement TASK-02 from /docs/tasks. Ignore previous discussions.
+    Act as Integration Builder. Implement TASK-02 from /docs/agent-workflow/tasks. Ignore previous discussions.
 
 ***
 
@@ -383,7 +380,7 @@ Designer + Human:
 
 *In a chat with Integration Designer:*
 
-    Create PRD for feature X in /docs/prd.
+    Create PRD for feature X in /docs/agent-workflow/prd.
 
 Human approves.
 
@@ -394,7 +391,7 @@ The **Integration Planner** translates the PRD into vertical delivery units.
 A **PLAN** breaks work into **VERTICAL SLICE**s and **TASK**s:
 
 - Each **TASK** represents one **end-to-end capability**
-- Has its own folder under `/docs/tasks/TASK-XX/`
+- Has its own folder under `/docs/agent-workflow/tasks/TASK-XX/`
 - Contains a `TASK-XX.md` root document
 - May contain multiple `SUBTASK-XX.md` files
 
@@ -487,7 +484,7 @@ Enable the Planner agent to delegate TASKs to the Builder agent for end-to-end i
 See: [Setup Guide — OPTION 3](installation/agent-workflow-setup-guide.md#option-3-agent-delegation-orchestrating-planner-and-builder-for-end-to-end-implementation)
 
 ### **OPTION 4: Project Domain Expert Mode**
-Transform Designer, Planner, and Builder agents into project domain experts by having them prioritize project-specific documentation from `docs/[project-name]/`. Ensures agents apply domain context to all decisions and consistently update knowledge from project-specific guidance.
+Transform Designer, Planner, and Builder agents into project domain experts by having them prioritize project-specific documentation from `docs/agent-workflow/[project-name]/`. Ensures agents apply domain context to all decisions and consistently update knowledge from project-specific guidance.
 
 See: [Setup Guide — OPTION 4](installation/agent-workflow-setup-guide.md#option-4-project-domain-expert-mode)
 
@@ -522,7 +519,7 @@ From the matching character, return:
 - A timestamp indicating when the search was executed
 ```
 
-This will generate a PRD under `/docs/prd/`. **Review and approve** the PRD before continuing.
+This will generate a PRD under `/docs/agent-workflow/prd/`. **Review and approve** the PRD before continuing.
 
 
 ## **Phase 2 — Execution Planning (PLAN)**
@@ -532,7 +529,7 @@ This will generate a PRD under `/docs/prd/`. **Review and approve** the PRD befo
 ```
 You are Integration Planner. Ignore previous discussions.
 
-Read the approved PRD under /docs/prd/ for the Star Wars Character Search service.
+Read the approved PRD under /docs/agent-workflow/prd/ for the Star Wars Character Search service.
 
 Create a complete execution plan with 3–6 vertical TASKs.
 Each TASK must be end-to-end testable and production-ready.
@@ -551,7 +548,7 @@ Generate TASK documents under /docs/tasks/.
 ```
 You are Integration Builder. Ignore previous discussions.
 
-Implement TASK-01 exactly as defined in /docs/tasks/TASK-01/.
+Implement TASK-01 exactly as defined in /docs/agent-workflow/tasks/TASK-01/.
 
 Follow all rules from copilot-instructions.md.
 Run tests after implementation and report results.
@@ -579,7 +576,7 @@ If during implementation new requirements or issues arise, **open a new chat** w
 ```
 You are Integration Designer. Ignore previous discussions.
 
-Read the current PRD under /docs/prd/ for the Star Wars Character Search service.
+Read the current PRD under /docs/agent-workflow/prd/ for the Star Wars Character Search service.
 
 Evaluate the following change request and update the PRD if needed:
 - [describe the change or new requirement here]
@@ -590,9 +587,9 @@ After the PRD is updated, switch to **Integration Planner Agent** in a **new cha
 ```
 You are Integration Planner. Ignore previous designer discussions.
 
-The PRD under /docs/prd/ has been updated.
+The PRD under /docs/agent-workflow/prd/ has been updated.
 
-Review the changes, update the plan, and adjust or create new TASKs as needed under /docs/tasks/.
+Review the changes, update the plan, and adjust or create new TASKs as needed under /docs/agent-workflow/tasks/.
 ```
 
 Then continue implementation with the **Integration Builder Agent** as in Phase 3.
@@ -637,7 +634,7 @@ https://github.com/DataIntegrationMastery/integration-agent-workflow/blob/main/d
 If the guide cannot be found from the web-address, try to find the same file from the project directory.
 
 Analyze all components that the Agent Workflow setup creates in a project:
-- Folder structures (/docs/architecture, /docs/plans, /docs/prd, /docs/rules, /docs/tasks, .github)
+- Folder structures (/docs/agent-workflow/architecture, /docs/agent-workflow/agent-workflow/plans, /docs/agent-workflow/prd, /docs/agent-workflow/rules, /docs/agent-workflow/tasks, .github)
 - Agent definition files (.github/agents/*.agent.md)
 - Template files (TASK-template.md, SUBTASK-template.md, PRD-template.md, PLAN-template.md, PR-template.md)
 - Rule files (project-context.md, technology-stack.md)
@@ -655,7 +652,7 @@ Finally, list all removed files and folders.
 
 ## Important
 
-- **Always review** before confirming deletions — especially for `/docs/tasks/` which may contain completed work
+- **Always review** before confirming deletions — especially for `/docs/agent-workflow/tasks/` which may contain completed work
 - The prompt fetches the latest setup guide, ensuring it accounts for any new components added in future versions
 - If you want to keep certain documentation (e.g., completed TASKs), answer accordingly when the agent asks
 
