@@ -1,6 +1,6 @@
 # **Agent Workflow Setup Guide**
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 2.1** / *13th Mar 2026*
+**Version 2.2** / *17th Mar 2026*
 
 ## Table of Contents
 
@@ -319,10 +319,12 @@ Content should include:
 
 Defines:
 
-*   Scope
-*   Data contracts
-*   Non‑functional requirements
-*   Assumptions & risks
+*   Scope and business objective
+*   Source–target–enrichment view
+*   Data contracts and transformation requirements
+*   Functional and non-functional requirements
+*   Operations, deployment, and lifecycle
+*   Dependencies, risks, and assumptions
 
 Create:
 
@@ -330,46 +332,66 @@ Create:
 
 Example content:
 ```
-    ​​# PRD – <Feature Name>
+    # PRD – <Feature Name>
 
-    ## 1. Objective
+    ## 1. Objective & General Information
 
     What problem is being solved?
     What business or system outcome is expected?
+    How is success measured (latency, error rate, reduction in manual work)?
+
+    ### Stakeholders
+    - Product owner:
+    - Technical owner:
+    - Source system representative:
+    - Target system representative:
+    - Data owner(s):
 
     ---
 
     ## 2. Scope
 
     ### In Scope
-    - 
+    -
 
     ### Out of Scope
-    - 
+    - (e.g., no master data resolution, no user UI, no business reporting)
 
     ---
 
-    ## 3. Actors & Systems
+    ## 3. Source–Target–Enrichment View
 
     ### Source Systems
-    - 
+    | System | Role | Owner | Direction | Data type | Update frequency |
+    |--------|------|-------|-----------|-----------|-----------------|
+    |        |      |       |           |           |                 |
 
     ### Target Systems
-    - 
+    | System | Role | Owner | Criticality | How data is used |
+    |--------|------|-------|-------------|-----------------|
+    |        |      |       |             |                 |
 
-    ### Operational Stakeholders
-    - 
+    ### Enrichment Sources
+    | System | Data provided | Join key | When enrichment occurs | Conflict resolution |
+    |--------|--------------|----------|----------------------|---------------------|
+    |        |              |          |                      |                     |
+
+    ### Integration Directions & Mechanisms
+    - Direction (inbound / outbound / bidirectional):
+    - Synchronous / asynchronous:
+    - Mechanism (REST API / Kafka / JMS / file transfer / DB connector / etc.):
+    - Payload format (JSON / XML / CSV / Avro / etc.):
+    - Correlation ID strategy:
 
     ---
 
     ## 4. Data Contracts
 
     ### Input Contract
-    - Protocol (HTTP / Kafka / JMS / File / etc.)
-    - Schema format (JSON / XML / Avro / etc.)
+    - Protocol:
+    - Schema format:
     - Example payload:
     - Required fields:
-    - Correlation ID strategy:
 
     ### Output Contract
     - Protocol:
@@ -379,51 +401,114 @@ Example content:
 
     ---
 
-    ## 5. High-Level Integration Flow
+    ## 5. Data & Transformation Requirements
 
-    Describe:
+    ### Logical Data Model
+    Key entities (e.g., Customer, Order, Product), primary attributes, relationships, business key vs. technical key.
 
-    Ingress → Validation → Transformation → Transport → Target → Callback (if any)
+    ### Field Mapping
+    | Source field | Target field | Mandatory | Default | Transformation (type, format, unit, normalization) |
+    |-------------|-------------|-----------|---------|--------------------------------------------------|
+    |             |             |           |         |                                                  |
+
+    (Full mapping table may be maintained as a separate attachment; reference it here if so.)
+
+    ### Enrichment Logic
+    - When is enrichment triggered:
+    - Join keys used:
+    - Conflict resolution (when sources disagree):
+
+    ### Validation Rules
+    - Mandatory field checks:
+    - Value range / reference checks:
+    - Handling of invalid records (reject / parking area / partial accept):
+
+    ### Data Quality Requirements
+    - Acceptable error rate:
+    - Duplicate handling strategy:
+    - Historization requirements:
+    - Audit trail requirements:
 
     ---
 
-    ## 6. Non-Functional Requirements (MANDATORY)
+    ## 6. High-Level Integration Flow
 
-    - Expected throughput:
-    - Latency target:
-    - Retry policy:
-    - Timeout policy:
+    Ingress → Validation → Enrichment → Transformation → Transport → Target → Callback (if any)
+
+    Describe notable branching, routing, or conditional logic here.
+
+    ---
+
+    ## 7. Functional Requirements
+
+    - Data transfer trigger (poll / event / batch / near-real-time stream):
+    - Retry and error handling: retry logic, dead-letter queue, alert channels (e-mail, monitoring tool):
+    - Configurability: can customer-specific mappings, filters, or enrichment sources be changed via config without code changes?
+    - Monitoring and reporting: which metrics are exposed (throughput, error count, queue depth, last successful run) and where?
+
+    ---
+
+    ## 8. Non-Functional Requirements (MANDATORY)
+
+    - Expected throughput (events/s or rows/run):
+    - Latency target (max source-to-target delay):
+    - Availability target (e.g., 99.9%) and failover strategy:
+    - Recovery time objective (RTO):
+    - Scalability approach (horizontal scaling, partitioning, sharding):
     - Idempotency strategy:
-    - Dead-letter handling:
-    - Observability requirements (logs, metrics, traces):
-    - Security (authN, authZ, secrets, encryption):
-    - Compliance constraints (PII, audit):
+    - Timeout policy:
+    - Security (authN, authZ, secrets management, encryption in transit and at rest):
+    - Compliance constraints (GDPR / PII, audit log retention policy):
 
     ---
 
-    ## 7. Acceptance Criteria
+    ## 9. Operations, Deployment & Lifecycle
+
+    ### Deployment Scenarios
+    - How is a new customer / instance onboarded (config steps, tests, acceptance)?
+
+    ### Maintenance Model
+    - Who monitors the integration?
+    - How are alerts handled and what are the SLA tiers?
+
+    ### Change Management
+    - How are changes (new data model, added enrichment source) applied without breaking existing integrations (versioning, backward compatibility strategy)?
+
+    ### Data Migration
+    - If go-live involves loading historical data: volumes, run strategy, performance and locking impact?
+
+    ---
+
+    ## 10. Acceptance Criteria
 
     - End-to-end happy path works
-    - Validation errors handled
-    - Target failure handled
-    - Retry behavior verified
-    - Tests exist
+    - Validation errors handled and routed correctly
+    - Enrichment logic verified
+    - Target failure handled with correct retry/DLQ behavior
+    - Monitoring metrics visible
+    - Tests exist and pass
 
     ---
 
-    ## 8. Assumptions
+    ## 11. Dependencies
 
-    -
-
-    ---
-
-    ## 9. Open Questions
-
-    -
+    | Dependency | Owner | Required by | Status |
+    |-----------|-------|-------------|--------|
+    |           |       |             |        |
 
     ---
 
-    ## 10. Risks
+    ## 12. Risks & Assumptions
+
+    - Source data quality risks:
+    - Schema change management:
+    - Regulatory / compliance risks:
+    - Third-party API limitations:
+    - Assumptions made:
+
+    ---
+
+    ## 13. Open Questions
 
     -
 
