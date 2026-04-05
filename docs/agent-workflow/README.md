@@ -87,7 +87,7 @@ https://code.visualstudio.com/
 ## Install GitHub Copilot Extension
 
 After installing VS Code, open the Extensions marketplace and install GitHub Copilot, or follow the official setup guide here:
-https://docs.github.com/en/copilot/getting-started-with-github-copilot
+https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension?tool=vscode
 
 
 ## Licensing and Pricing
