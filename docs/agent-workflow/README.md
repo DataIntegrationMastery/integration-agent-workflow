@@ -1,6 +1,6 @@
 # Integration Agent Workflow
 Developed by **[Data Integration Mastery](https://dataintegrationmastery.com/)**
-**Version 2.0** / *12th Mar 2026*
+**Version 2.1** / *24th Mar 2026*
 
 ## Table of Contents
 
@@ -216,9 +216,7 @@ correctness, and the absence of conflicting or contradictory instructions.
 
 Files to check:
 1. `.github/copilot-instructions.md`
-2. `.github/agents/Integration Designer.agent.md`
-3. `.github/agents/Integration Planner.agent.md`
-4. `.github/agents/Integration Builder.agent.md`
+2. `.github/agents/*.agent.md` -files
 
 For each file, verify:
 
@@ -230,9 +228,6 @@ For each file, verify:
 **Role Definitions**
 - Are Designer, Planner, and Builder roles clearly separated?
 - Does each agent have the correct assigned tools?
-  - Designer: 'read', 'edit', 'search', 'fetch'
-  - Planner: 'read', 'edit', 'search'
-  - Builder: 'read', 'edit', 'search', 'execute'
 
 **Rule Consistency**
 - Are workflow rules (PRD → PLAN → TASK) consistently described across all agents?
